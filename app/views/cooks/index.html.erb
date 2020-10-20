@@ -1,0 +1,11 @@
+<h1>Cooks</h1>
+
+<% @cooks.each do |cook| %>
+  <%= link_to cook_path(cook) do %>
+    <div class='card'>
+      <%= cook.user.first_name %>
+      <%= cook.user.last_name %>
+    </div>
+  <% end %>
+<% end %>
+
