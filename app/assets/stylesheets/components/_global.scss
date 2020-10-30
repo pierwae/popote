@@ -1,0 +1,80 @@
+// ATTRIBUTS
+
+h3, h2 {
+  color: $dark-grey;
+  font-weight: 500;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+p {
+  color: $grey;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0px;
+  line-height: 16px;
+  font-weight: 300;
+}
+
+a:link {
+ text-decoration: none;
+}
+
+// FONTS
+
+.orange-font {
+  color: $orange;
+}
+
+.yellow-font {
+  color: $yellow;
+}
+
+// FLEXBOX
+
+.flex-row-center-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-sb {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-column-sb {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flex-row-start-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// BACKGROUND
+
+.orange-bg {
+  background-color: $orange;
+}
+
+.yellow-bg {
+  background-color: $yellow;
+}
+
+.white-bg {
+  background-color: $white;
+}
