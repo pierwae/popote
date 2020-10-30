@@ -1,19 +1,22 @@
-<div class='yellow-bg'>
+<div id='searchbar-access' class='flex-center orange-bg'></div>
+
+<div id='searchbar' class='searchbar-display'>
   <%= render 'shared/searchbar' %>
 </div>
+
 
 <% @cooks.each do |cook| %>
   <div class='cook-card m-5'>
     <%= link_to cook_path(cook) do %>
       <div class='image'></div>
-      <div class='star-mark'>
+      <div class='star-mark flex-row-center-center white-bg'>
         <i class="fas fa-star yellow-font star"></i>
         <p class='yellow-font'>4.5 Très bien</p>
       </div>
-      <div class='card-content'>
+      <div class='card-content flex-column-sb'>
         <h3><%= cook.user.first_name %></h3>
         <p>Américain • Poulet • Poulet Frit • Salade • Sandwiches • Burgers</p>
-        <ul class='card-list'>
+        <ul class='card-list orange-font'>
           <li>Un peu d’Asie dans le logis</li>
           <li>Voyage vegan oriental</li>
           <li>Que du gras</li>
@@ -24,5 +27,5 @@
 <% end %>
 
 
-
+<%= javascript_pack_tag 'searchbar' %>
 
