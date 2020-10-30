@@ -1,11 +1,26 @@
-<h1>Cooks</h1>
+<h1 id='typo'>Cooks</h1>
 
 <% @cooks.each do |cook| %>
-  <%= link_to cook_path(cook) do %>
-    <div class='card'>
-      <%= cook.user.first_name %>
-      <%= cook.user.last_name %>
-    </div>
-  <% end %>
+  <div class='cook-card m-5'>
+    <%= link_to cook_path(cook) do %>
+      <div class='image'></div>
+      <div class='star-mark'>
+        <i class="fas fa-star yellow-font star"></i>
+        <p class='yellow-font'>4.5 Très bien</p>
+      </div>
+      <div class='card-content'>
+        <h3><%= cook.user.first_name %></h3>
+        <p>Américain • Poulet • Poulet Frit • Salade • Sandwiches • Burgers</p>
+        <ul class='card-list'>
+          <li>Un peu d’Asie dans le logis</li>
+          <li>Voyage vegan oriental</li>
+          <li>Que du gras</li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
 <% end %>
+
+
+
 
