@@ -1,0 +1,99 @@
+.yellow-bg {
+  width: 100vw;
+  height: 168px;
+  background-color: $yellow;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.searchbar-card {
+  max-width: 882px;
+  width: 90vw;
+  height: 91px;
+  background: #FFFFFF;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.searchbar-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 34%;
+  height: 60px;
+  border-bottom: 1px solid $light-grey;
+  margin-bottom: auto;
+}
+
+@media (max-width: 767px) {
+  .searchbar-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .searchbar-card {
+    width: 260px;
+    height: 240px;
+  }
+
+  .field-block {
+    width: 220px;
+  }
+
+  .yellow-bg {
+    height: 270px;
+  }
+}
+.field {
+  border: none;
+  padding: 0;
+  font-family: $body-font;
+  font-size: 16px;
+  font-weight: 300;
+  color: $light-grey;
+  height: 30px;
+}
+
+::placeholder {
+  color: $light-grey !important;
+}
+
+.field-icon {
+  font-size: 16px;
+  font-weight: 300;
+  color: $light-grey;
+}
+
+.inline-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.line {
+  height: 1px;
+  width: 300px;
+  background-color: $light-grey;
+}
+
+.field:focus {
+  outline:  none;
+  color: none;
+}
