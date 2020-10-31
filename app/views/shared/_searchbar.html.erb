@@ -4,7 +4,7 @@
 <div class='searchbar-bg yellow-bg flex-row-center-center'>
   <div class="searchbar-card white-bg flex-row-sb">
 
-    <%= simple_form_for :search, url: '#',
+    <%= simple_form_for :search, url: cooks_path, method: 'get',
       wrapper: :inline_form,
       html: { class: "form-inline searchbar-form flex-row-sb" },
       wrapper_mappings: {
