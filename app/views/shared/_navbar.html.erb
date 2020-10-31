@@ -1,25 +1,46 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <%= link_to homepage_path, class: "navbar-brand" do %>
-    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
-  <% end %>
+<div class='white-bg sticky-top'>
+  <div class="navbar navbar-expand-md navbar-light navbar-lewagon">
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <%= link_to homepage_path, class: "" do %>
+      <%= image_tag 'logo.png', class: 'navbar-logo' %>
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <%= link_to "Devenez cuisinier !", "#", class: "nav-link" %>
-      </li>
-      <li class="nav-item dropdown">
-        <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <%= link_to "Connexion", new_user_session_path, class: "dropdown-item" %>
-          <%= link_to "Inscription", new_user_registration_path, class: "dropdown-item" %>
-        </div>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <% if signed_in? && current_user.admin? %>
+          <li class="nav-item active mt-10px mt-md-0">
+            <%= link_to "Espace Administrateur", "#", class: "orange-16 mr-4 dashboard-btn flex-row-center-center nav-link" %>
+          </li>
+        <% end %>
+
+        <% if !signed_in? || (signed_in? && current_user.cook.nil?) %>
+          <li class="nav-item active mt-10px mt-md-0">
+            <%= link_to "Devenez cuisinier !", "#", class: "orange-16 mr-4 underline nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item active mt-10px mt-md-0">
+            <%= link_to "Espace Cuisinier", "#", class: "orange-16 mr-4 dashboard-btn flex-row-center-center nav-link" %>
+          </li>
+        <% end %>
+
+        <li class="nav-item dropdown">
+          <div class='user-menu flex-row-sb-center' id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class='bar-menu flex-row-center-center'><i class="fas fa-bars"></i></div>
+            <i class="fas fa-user-circle user-logo"></i>
+          </div>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <%= link_to "Connexion", new_user_session_path, class: "dropdown-item" %>
+            <%= link_to "Inscription", new_user_registration_path, class: "dropdown-item" %>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
+
