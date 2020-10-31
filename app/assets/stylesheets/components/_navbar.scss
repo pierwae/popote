@@ -1,6 +1,16 @@
+.dashboard-btn {
+  height: 40px;
+  border: 1px solid $orange;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 0 15px 0 15px !important;
+  width: fit-content;
+}
+
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  max-width: 1120px;
+  margin: auto;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -9,4 +19,30 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.navbar-logo {
+  height: 40px;
+  padding: 5px;
+}
+
+.user-menu {
+  width: 70px;
+  height: 40px;
+  border: 1px solid $dark-grey;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 5px;
+  cursor: pointer;
+
+  .bar-menu {
+    width: 28px;
+    height: 28px;
+    color: $dark-grey;
+  }
+
+  .user-logo {
+    font-size: 28px;
+    color: $dark-grey;
+  }
 }
