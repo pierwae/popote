@@ -1,7 +1,1 @@
-
-<%= simple_form_for :search, url: cooks_path, method: 'get' do |f| %>
-  <%= f.error_notification %>
-  <%= f.input :date %>
-  <%= f.input :address %>
-  <%= f.button :submit, class: "btn-primary" %>
-<% end %>
+<%= render 'shared/searchbar' %>
