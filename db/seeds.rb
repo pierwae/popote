@@ -12,10 +12,22 @@ pierre = User.new(first_name: 'Pierre',
 pierre.save
 
 olivia = User.create(first_name: 'Olivia',
-                  last_name: 'Teko',
-                  email: 'olivia@gmail.com',
-                  password: 'password')
+                     last_name: 'Teko',
+                     email: 'olivia@gmail.com',
+                     password: 'password')
 olivia.save
+
+10.times do
+  first_name = Faker::Name.first_name
+  last_name  = Faker::Name.last_name
+
+  somebody = User.create(first_name: first_name,
+                         last_name: last_name,
+                         email: "#{first_name}.#{last_name}@gmail.com",
+                         password: 'password')
+
+  Cook.create(user: somebody)
+end
 
 puts '3/3 Creating some fake cooks...'
 
