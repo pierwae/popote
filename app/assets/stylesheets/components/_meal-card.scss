@@ -1,5 +1,10 @@
+.meal-card-container {
+  padding: 8px;
+}
+
 .meal-card {
   height: 135px;
+  max-width: 489px;
   padding: 20px;
   margin: 0 auto 0 auto;
 }
@@ -10,24 +15,16 @@
   margin-left: 20px;
 }
 
-// Card sizing
-
-.card-s {
-  max-width: 360px;
-}
-
-.card-xl {
-  max-width: 489px;
-}
+// RESPONSIVE
 
 @media (max-width: 991px) {
-  .card-s {
+  .meal-card {
     max-width: 489px;
   }
 }
 
 @media (max-width: 576px) {
-  .card-s {
+  .meal-card {
     max-width: 100%;
     border-radius: 0px !important;
     margin: 0px !important;
@@ -36,10 +33,11 @@
   }
 
   .meal-card-container {
-    padding: 0 !important;
+    padding: 0;
   }
 
-  .test21 {
+  .meal-cards-container {
     padding: 0 !important;
+    border-top: 1px solid $very-light-grey !important;
   }
 }
