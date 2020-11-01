@@ -1,0 +1,19 @@
+
+<div class='white-card-shadow cook-card'>
+  <%= link_to cook_path(cook) do %>
+    <%= image_tag 'cook.jpg', class: 'image cook-card-image' %>
+    <div class='cook-card-mark white-card-shadow flex-row-center-center'>
+      <i class="fas fa-star yellow-font star"></i>
+      <p class='yellow-font'>4.5 Très bien</p>
+    </div>
+    <div class='cook-card-content flex-column-sb'>
+      <h3><%= cook.user.first_name %></h3>
+      <p>Américain • Poulet • Poulet Frit • Salade • Sandwiches • Burgers</p>
+      <ul class='cook-card-list orange-14'>
+        <li>Un peu d’Asie dans le logis</li>
+        <li>Voyage vegan oriental</li>
+        <li>Que du gras</li>
+      </ul>
+    </div>
+  <% end %>
+</div>
