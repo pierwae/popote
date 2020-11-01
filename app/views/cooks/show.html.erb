@@ -8,6 +8,7 @@
 </div>
 
 
+
 <div class='white-card-shadow basket-card flex-column-sb-center'>
   <%= link_to '#', class: 'w-100' do %>
     <div class='red-btn w-100'>Valider mon panier</div>
@@ -19,5 +20,27 @@
       <p>De 18h jusqu’à 19h30</p>
     </div>
     <div class='small-btn'>Modifier</div>
+  </div>
+
+  <% 3.times do %>
+
+  <div class='basket-order-area flex-row-sb-center w-100'>
+    <div class='flex-row-center-center'>
+      <i class="fas fa-minus-circle very-light-grey-14"></i>
+      <p class='grey-16 basket-order-number flex-row-center-center'>3</p>
+      <i class="fas fa-plus-circle very-light-grey-14"></i>
+      <div class='ml-3'>
+        <p class='grey-medium-16 mb-2'>Hachis parmentier</p>
+        <p>4 personnes</p>
+      </div>
+    </div>
+    <p class='grey-medium-16'>16,00 €</p>
+  </div>
+
+  <% end %>
+
+  <div class='basket-total-area flex-row-sb-center w-100'>
+    <p class='grey-medium-16'>Total</p>
+    <p class='grey-medium-16'>16,00 €</p>
   </div>
 </div>
