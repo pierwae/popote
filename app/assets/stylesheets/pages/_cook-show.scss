@@ -1,14 +1,13 @@
-.meal-card-container {
-  // background-color: blue;
-  min-height: 100px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+.cook-detail-container {
+  background-color: $light-grey;
+  height: 200px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.basket-container {
-  // background-color: $light-grey;
-  min-height: 100px;
+.meal-cards-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .global-container {

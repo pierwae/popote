@@ -9,3 +9,37 @@
   width: 95px;
   margin-left: 20px;
 }
+
+// Card sizing
+
+.card-s {
+  max-width: 360px;
+}
+
+.card-xl {
+  max-width: 489px;
+}
+
+@media (max-width: 991px) {
+  .card-s {
+    max-width: 489px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-s {
+    max-width: 100%;
+    border-radius: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+    border-bottom: 1px solid $very-light-grey !important;
+  }
+
+  .meal-card-container {
+    padding: 0 !important;
+  }
+
+  .test21 {
+    padding: 0 !important;
+  }
+}

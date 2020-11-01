@@ -1,8 +1,17 @@
+<!-- DESCRIPTION SECTION -->
+<div class='cook-detail-container'>
+
+</div>
+<!-- DESCRIPTION SECTION -->
+
+
 <div class='global-container container'>
   <div class='row'>
-    <div class='col-lg-8 col-md-7 meal-card-container'>
 
-      <% 8.times do %>
+    <!-- MEAL CARDS CONTAINER -->
+    <div class='col-lg-8 col-md-7 meal-cards-container'>
+
+      <% 15.times do %>
 
         <div class='col-lg-6 p-2 test21'>
           <div class='meal-card card-s white-card-border flex-row-sb-center'>
@@ -13,8 +22,10 @@
       <% end %>
 
     </div>
-    <div class='col-lg-4 col-md-5 basket-container'>
+    <!-- MEAL CARDS CONTAINER -->
 
+    <!-- BASKET CONTAINER -->
+    <div class='col-lg-4 col-md-5'>
       <!-- Début du panier -->
       <div class='white-card-shadow basket-card flex-column-sb-center'>
         <%= link_to '#', class: 'w-100' do %>
@@ -52,18 +63,8 @@
         </div>
       </div>
       <!-- Fin du panier -->
-
     </div>
+    <!-- BASKET CONTAINER -->
+
   </div>
 </div>
-
-
-<div class='meal-card card-s white-card-border flex-row-sb-center'>
-  <%= render 'shared/meal_card_content' %>
-</div>
-
-<div class='meal-card card-xl white-card-border flex-row-sb-center'>
-  <%= render 'shared/meal_card_content' %>
-</div>
-
-
