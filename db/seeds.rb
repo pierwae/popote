@@ -1,9 +1,10 @@
-puts '1/3 Cleaning DB...'
+puts '#1 Cleaning DB...'
 
+Meal.delete_all
 Cook.delete_all
 User.delete_all
 
-puts '2/3 Creating some fake users...'
+puts '#2 Creating some fake users...'
 
 pierre = User.new(first_name: 'Pierre',
                   last_name: 'Waechter',
@@ -29,9 +30,16 @@ olivia.save
   Cook.create(user: somebody)
 end
 
-puts '3/3 Creating some fake cooks...'
+puts '#3 Creating some fake cooks...'
 
 Cook.create(user: pierre)
 Cook.create(user: olivia)
 
+puts '#4 Creating some fake meals...'
+
+Meal.create(name: 'Hamburger', price: 5.00, cook: Cook.first)
+Meal.create(name: 'Tarte tatin', price: 10.00, cook: Cook.first)
+Meal.create(name: 'Raclette', price: 15.00, cook: Cook.first)
+
 puts 'Finished !'
+

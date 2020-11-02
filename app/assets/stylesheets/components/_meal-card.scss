@@ -1,5 +1,6 @@
 .meal-card-container {
   padding: 8px;
+  height: fit-content;
 }
 
 .meal-card {
@@ -7,6 +8,7 @@
   max-width: 489px;
   padding: 20px;
   margin: 0 auto 0 auto;
+  cursor:  pointer;
 }
 
 .meal-card-image {
