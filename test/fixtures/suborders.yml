@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
-  description: MyString
+  meal: one
+  basket: one
+  quantity: 1
 
 two:
-  user: two
-  description: MyString
+  meal: two
+  basket: two
+  quantity: 1
