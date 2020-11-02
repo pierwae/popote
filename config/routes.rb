@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   root to: 'pages#home', as: 'homepage'
 
   resources :cooks
+
+  get 'meal_details/:id', to: 'meals#meal_details', as: 'meal_details'
 end

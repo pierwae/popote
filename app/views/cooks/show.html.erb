@@ -1,3 +1,7 @@
+<div>
+  <%= render 'shared/meal_pop_up' %>
+</div>
+
 <!-- DESCRIPTION SECTION -->
 <div class='cook-detail-container'>
 
@@ -11,14 +15,16 @@
     <!-- MEAL CARDS CONTAINER -->
     <div class='col-lg-8 col-md-7 meal-cards-container'>
 
-      <% 15.times do %>
+      <% 3.times do %>
+      <% @meals.each do |meal| %>
 
         <div class='col-lg-6 meal-card-container'>
-          <div class='meal-card white-card-border flex-row-sb-center'>
-            <%= render 'shared/meal_card_content' %>
+          <div data-id='<%= meal.id %>'  class='meal-card white-card-border flex-row-sb-center open-exit-meal-pop-up'>
+            <%= render partial: 'shared/meal_card_content', locals: {meal: meal} %>
           </div>
         </div>
 
+      <% end %>
       <% end %>
 
     </div>
@@ -27,7 +33,7 @@
     <!-- BASKET CONTAINER -->
     <div class='col-lg-4 col-md-5'>
       <!-- Début du panier -->
-      <div class='white-card-shadow basket-card flex-column-sb-center'>
+      <div data-id='<%= @basket.id %>' class='white-card-shadow basket-card flex-column-sb-center'>
         <%= link_to '#', class: 'w-100' do %>
           <div class='red-btn w-100'>Valider mon panier</div>
         <% end %>
@@ -40,20 +46,20 @@
           <div class='small-btn'>Modifier</div>
         </div>
 
-        <% 3.times do %>
+        <% @orders.each do |order| %>
 
-        <div class='basket-order-area flex-row-sb-center w-100'>
-          <div class='flex-row-center-center'>
-            <i class="fas fa-minus-circle very-light-grey-14"></i>
-            <p class='grey-16 basket-order-number flex-row-center-center'>3</p>
-            <i class="fas fa-plus-circle very-light-grey-14"></i>
-            <div class='ml-3'>
-              <p class='grey-medium-16 mb-2'>Hachis parmentier</p>
-              <p>4 personnes</p>
+          <div class='basket-order-area flex-row-sb-center w-100'>
+            <div class='flex-row-center-center'>
+              <i class="fas fa-minus-circle very-light-grey-14"></i>
+              <p class='grey-16 basket-order-number flex-row-center-center'>3</p>
+              <i class="fas fa-plus-circle very-light-grey-14"></i>
+              <div class='ml-3'>
+                <p class='grey-medium-16 mb-2'><%= order.meal.name %></p>
+                <p>4 personnes</p>
+              </div>
             </div>
+            <p class='grey-medium-16'><%= order.meal.price %></p>
           </div>
-          <p class='grey-medium-16'>16,00 €</p>
-        </div>
 
         <% end %>
 
@@ -68,3 +74,5 @@
 
   </div>
 </div>
+
+<%= javascript_pack_tag 'mealPopUp' %>
