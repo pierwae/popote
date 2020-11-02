@@ -10,40 +10,62 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_31_184506) do
+ActiveRecord::Schema.define(version: 2020_11_02_213518) do
 
   create_table "baskets", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.string "status"
-    t.float "total_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["customer_id"], name: "index_baskets_on_customer_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "cook_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cook_id"], name: "index_categories_on_cook_id"
   end
 
   create_table "cooks", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_cooks_on_user_id"
   end
 
   create_table "meals", force: :cascade do |t|
-    t.integer "cook_id", null: false
+    t.integer "category_id", null: false
     t.float "price"
     t.string "name"
+    t.boolean "deleted"
+    t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["cook_id"], name: "index_meals_on_cook_id"
+    t.index ["category_id"], name: "index_meals_on_category_id"
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "meal_id", null: false
+    t.integer "cook_id", null: false
+    t.integer "customer_id", null: false
+    t.string "status"
+    t.float "total_price"
+    t.date "date"
+    t.integer "basket_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "basket_id", null: false
     t.index ["basket_id"], name: "index_orders_on_basket_id"
-    t.index ["meal_id"], name: "index_orders_on_meal_id"
+    t.index ["cook_id"], name: "index_orders_on_cook_id"
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
+  create_table "suborders", force: :cascade do |t|
+    t.integer "meal_id", null: false
+    t.integer "basket_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["basket_id"], name: "index_suborders_on_basket_id"
+    t.index ["meal_id"], name: "index_suborders_on_meal_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,14 +78,21 @@ ActiveRecord::Schema.define(version: 2020_10_31_184506) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "address"
+    t.string "zip"
+    t.string "city"
+    t.string "phone_number"
     t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "baskets", "users", column: "customer_id"
+  add_foreign_key "categories", "cooks"
   add_foreign_key "cooks", "users"
-  add_foreign_key "meals", "cooks"
+  add_foreign_key "meals", "categories"
   add_foreign_key "orders", "baskets"
-  add_foreign_key "orders", "meals"
+  add_foreign_key "orders", "cooks"
+  add_foreign_key "orders", "users", column: "customer_id"
+  add_foreign_key "suborders", "baskets"
+  add_foreign_key "suborders", "meals"
 end

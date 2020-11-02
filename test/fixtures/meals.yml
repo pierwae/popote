@@ -1,11 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  cook: one
-  price: 1
+  category: one
+  price: 1.5
   name: MyString
+  deleted: false
+  description: MyString
 
 two:
-  cook: two
-  price: 1
+  category: two
+  price: 1.5
   name: MyString
+  deleted: false
+  description: MyString

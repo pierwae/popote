@@ -1,11 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  meal: one
+  cook: one
   status: MyString
   total_price: 1.5
+  date: 2020-11-02
+  basket: one
 
 two:
-  meal: two
+  cook: two
   status: MyString
   total_price: 1.5
+  date: 2020-11-02
+  basket: two

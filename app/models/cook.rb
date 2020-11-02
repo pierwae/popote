@@ -1,4 +1,5 @@
 class Cook < ApplicationRecord
   belongs_to :user
-  has_many   :meals
+  has_many   :categories
+  has_many   :orders
 end

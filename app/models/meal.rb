@@ -1,4 +1,4 @@
 class Meal < ApplicationRecord
-  belongs_to :cook
-  has_many   :orders
+  belongs_to :category
+  has_many   :suborders
 end
