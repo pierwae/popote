@@ -8,23 +8,25 @@
 </div>
 <!-- DESCRIPTION SECTION -->
 
-
 <div class='global-container container'>
   <div class='row'>
 
     <!-- MEAL CARDS CONTAINER -->
     <div class='col-lg-8 col-md-7 meal-cards-container'>
 
-      <% 3.times do %>
-      <% @meals.each do |meal| %>
+      <% @categories.each do |category| %>
 
-        <div class='col-lg-6 meal-card-container'>
-          <div data-id='<%= meal.id %>'  class='meal-card white-card-border flex-row-sb-center open-exit-meal-pop-up'>
-            <%= render partial: 'shared/meal_card_content', locals: {meal: meal} %>
+        <h2 class='col-lg-12 category-title'><%= category.name %></h2>
+
+        <% category.meals.each do |meal| %>
+
+          <div class='col-lg-6 meal-card-container'>
+            <div data-id='<%= meal.id %>'  class='meal-card white-card-border flex-row-sb-center open-exit-meal-pop-up'>
+              <%= render partial: 'shared/meal_card_content', locals: {meal: meal} %>
+            </div>
           </div>
-        </div>
 
-      <% end %>
+        <% end %>
       <% end %>
 
     </div>
@@ -46,21 +48,19 @@
           <div class='small-btn'>Modifier</div>
         </div>
 
-        <% @orders.each do |order| %>
-
-          <div class='basket-order-area flex-row-sb-center w-100'>
+        <% @suborders.each do |suborder| %>
+          <div class='basket-suborder-area flex-row-sb-center w-100'>
             <div class='flex-row-center-center'>
               <i class="fas fa-minus-circle very-light-grey-14"></i>
-              <p class='grey-16 basket-order-number flex-row-center-center'>3</p>
+              <p class='grey-16 basket-suborder-number flex-row-center-center'>3</p>
               <i class="fas fa-plus-circle very-light-grey-14"></i>
               <div class='ml-3'>
-                <p class='grey-medium-16 mb-2'><%= order.meal.name %></p>
+                <p class='grey-medium-16 mb-2'><%= suborder.meal.name %></p>
                 <p>4 personnes</p>
               </div>
             </div>
-            <p class='grey-medium-16'><%= order.meal.price %></p>
+            <p class='grey-medium-16'><%= suborder.meal.price %></p>
           </div>
-
         <% end %>
 
         <div class='basket-total-area flex-row-sb-center w-100'>
