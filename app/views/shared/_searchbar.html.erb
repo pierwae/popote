@@ -12,7 +12,7 @@
       } do |f| %>
 
       <div class='searchbar-item flex-column-sb'>
-        <h2>Quand ?</h2>
+        <h3 class='font-size-18'>Quand ?</h3>
         <div class='flex-row-start-center'>
           <div class='mr-2'><i class="far fa-calendar-alt searchbar-text"></i></div>
           <%= f.input :date, input_html: { placeholder: 'Choisis ta date', class: "searchbar-field searchbar-text" } %>
@@ -20,7 +20,7 @@
       </div>
 
       <div class='searchbar-item flex-column-sb'>
-        <h2>Où ?</h2>
+        <h3 class='font-size-18'>Où ?</h3>
         <div class='flex-row-start-center'>
           <div class='mr-2'><i class="fas fa-map-marker-alt searchbar-text"></i></i></div>
           <%= f.input :location, input_html: { placeholder: 'Entre ton adresse', class: "searchbar-field searchbar-text" } %>

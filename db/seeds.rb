@@ -1,6 +1,7 @@
 puts '#1 Cleaning DB...'
 
 Meal.delete_all
+Category.delete_all
 Cook.delete_all
 User.delete_all
 
@@ -35,11 +36,21 @@ puts '#3 Creating some fake cooks...'
 Cook.create(user: pierre)
 Cook.create(user: olivia)
 
-puts '#4 Creating some fake meals...'
+puts '#4 Creating some fake categories...'
 
-Meal.create(name: 'Hamburger', price: 5.00, cook: Cook.first)
-Meal.create(name: 'Tarte tatin', price: 10.00, cook: Cook.first)
-Meal.create(name: 'Raclette', price: 15.00, cook: Cook.first)
+Cook.all.each do |cook|
+  Category.create(name: 'Plats asiatiques', cook: cook)
+  Category.create(name: 'Plats algériens', cook: cook)
+  Category.create(name: "L'Amérique dans l'assiette", cook: cook)
+end
+
+puts '#5 Creating some fake meals...'
+
+Category.all.each do |category|
+  Meal.create(name: 'Hamburger', price: 5.00, category: category)
+  Meal.create(name: 'Tarte tatin', price: 10.00, category: category)
+  Meal.create(name: 'Raclette', price: 15.00, category: category)
+end
 
 puts 'Finished !'
 

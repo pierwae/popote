@@ -5,8 +5,8 @@ class CooksController < ApplicationController
 
   def show
     @cook = Cook.find(params[:id])
-    @meals = Meal.all
+    @categories = @cook.categories
     @basket = Basket.last
-    @orders = @basket.orders
+    @suborders = @basket.suborders
   end
 end
