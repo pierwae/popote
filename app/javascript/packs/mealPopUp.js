@@ -1,6 +1,8 @@
 const addOrderToBasket = (id) => {
-  document.getElementById('meal-pop-up-total-btn').addEventListener('click', (event) => {
-    fetch()
+  const btn = document.getElementById('meal-pop-up-total-btn');
+  // console.log(btn);
+  btn.addEventListener('click', (event) => {
+    console.log(event);
   });
 }
 
@@ -25,11 +27,9 @@ const displayOrHideMealPopUp = () => {
         getMealDetails(id);
         addOrderToBasket(id);
       }
-
       document.getElementById('meal-pop-up').classList.toggle("hidden");
     });
   });
 }
 
 displayOrHideMealPopUp()
-addOrderToBasket()

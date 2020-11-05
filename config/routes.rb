@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'pages#home', as: 'homepage'
 
-  resources :cooks
+  resources :cooks, only: [:index]
+  resources :baskets, only: [:show] do
+    resources :cooks, only: [:show]
+  end
 
   get 'meal_details/:id', to: 'meals#meal_details', as: 'meal_details'
+  get 'new_basket', to: 'baskets#create', as: 'new_basket'
 end
