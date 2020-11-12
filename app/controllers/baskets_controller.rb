@@ -4,9 +4,13 @@ class BasketsController < ApplicationController
     render json: basket.to_json
   end
 
-  # def create_or_update_suborder
-  #   basket = Basket.find(params[:basket_id])
-  #   # Si suborder existe : update suborder avec une autre qtt
-  #   # si suborder n'existe pas : le créer avec les infos
-  # end
+  def the_meal_in_the_basket?
+    basket = Basket.find(params[:id])
+    meal   = Meal.find(params[:meals_id])
+    if basket.meals.include?(meal)
+      render json: Suborder.where(meal: meal, basket: basket).first.id.to_json
+    else
+      render json: 0.to_json
+    end
+  end
 end

@@ -54,6 +54,25 @@ decreaseQuantityMealPopUp()
 
 // FIN
 
+const isTheMealInTheBasket = (mealId, basketId) => {
+  fetch(`/meals/${mealId}/baskets/${basketId}`)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
+const addSuborderToBasket = () => {
+  document.getElementById('meal-pop-up-total-btn').addEventListener('click', (event) => {
+    const mealId = document.getElementById('meal-pop-up').dataset.id;
+    const basketId = document.querySelector('.basket-card').dataset.id;
+    isTheMealInTheBasket(mealId, basketId);
+  });
+}
+
+addSuborderToBasket()
+// Apparation du pop up
+
 const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-name').innerHTML = data.name;
   document.getElementById('meal-pop-up-total-btn').innerHTML = `Total ${formatPrice(data.price)}€`;
@@ -87,13 +106,6 @@ const hideMealPopUp = () => {
   });
 }
 
-const addSuborderToBasket = () => {
-  document.getElementById('meal-pop-up-total-btn').addEventListener('click', (event) => {
-    const id = document.getElementById('meal-pop-up').dataset.id;
-    console.log(id);
-  });
-}
-
 displayMealPopUp()
 hideMealPopUp()
-addSuborderToBasket()
+

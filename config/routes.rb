@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
   root to: 'pages#home', as: 'homepage'
 
@@ -10,4 +9,5 @@ Rails.application.routes.draw do
 
   get 'meal_details/:id', to: 'meals#meal_details', as: 'meal_details'
   get 'new_basket', to: 'baskets#create', as: 'new_basket'
+  get 'meals/:meals_id/baskets/:id', to: 'baskets#the_meal_in_the_basket?', as: 'is_the_meal_in_the_basket'
 end
