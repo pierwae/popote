@@ -1,14 +1,8 @@
-const addOrderToBasket = (id) => {
-  const btn = document.getElementById('meal-pop-up-total-btn');
-  // console.log(btn);
-  btn.addEventListener('click', (event) => {
-    console.log(event);
-  });
-}
 
 const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-name').innerHTML = data.name;
   document.getElementById('meal-pop-up-total-btn').innerHTML = data.price;
+  document.getElementById('meal-pop-up').dataset.id = data.id;
 }
 
 const getMealDetails = (id) => {
@@ -19,17 +13,31 @@ const getMealDetails = (id) => {
     });
 }
 
-const displayOrHideMealPopUp = () => {
-  document.querySelectorAll('.open-exit-meal-pop-up').forEach((element) => {
+const displayMealPopUp = () => {
+  document.querySelectorAll('.meal-card').forEach((element) => {
     element.addEventListener('click', (event) => {
       const id = event.currentTarget.dataset.id;
-      if (id !== undefined) {
-        getMealDetails(id);
-        addOrderToBasket(id);
-      }
-      document.getElementById('meal-pop-up').classList.toggle("hidden");
+      getMealDetails(id);
+      document.getElementById('meal-pop-up').classList.remove("hidden");
     });
   });
 }
 
-displayOrHideMealPopUp()
+const hideMealPopUp = () => {
+  document.querySelectorAll('.quit-meal-pop-up').forEach((element) => {
+    element.addEventListener('click', (event) => {
+      document.getElementById('meal-pop-up').classList.add("hidden");
+    });
+  });
+}
+
+const addSuborderToBasket = () => {
+  document.getElementById('meal-pop-up-total-btn').addEventListener('click', (event) => {
+    const id = document.getElementById('meal-pop-up').dataset.id;
+    console.log(id);
+  });
+}
+
+displayMealPopUp()
+hideMealPopUp()
+addSuborderToBasket()

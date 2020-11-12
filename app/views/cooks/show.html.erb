@@ -21,7 +21,7 @@
         <% category.meals.each do |meal| %>
 
           <div class='col-lg-6 meal-card-container'>
-            <div data-id='<%= meal.id %>'  class='meal-card white-card-border flex-row-sb-center open-exit-meal-pop-up'>
+            <div data-id='<%= meal.id %>'  class='meal-card white-card-border flex-row-sb-center'>
               <%= render partial: 'shared/meal_card_content', locals: {meal: meal} %>
             </div>
           </div>
@@ -46,6 +46,18 @@
             <p>De 18h jusqu’à 19h30</p>
           </div>
           <div class='small-btn'>Modifier</div>
+        </div>
+
+        <div class='basket-suborder-area flex-row-sb-center w-100'>
+          <div class='flex-row-center-center'>
+            <div class='very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
+            <p class='grey-16 basket-suborder-number flex-row-center-center'>3</p>
+            <div class='very-light-grey-14'><i class="fas fa-plus-circle"></i></div>
+            <div class='ml-3'>
+              <p class='grey-medium-16'>Hamburger</p>
+            </div>
+          </div>
+          <p class='grey-medium-16'>13 €</p>
         </div>
 
         <% @suborders.each do |suborder| %>
@@ -75,4 +87,6 @@
   </div>
 </div>
 
-<%= javascript_pack_tag 'mealPopUp' %>
+<%= javascript_pack_tag 'mealPopUp' do %>
+  const idid = 3;
+<% end %>

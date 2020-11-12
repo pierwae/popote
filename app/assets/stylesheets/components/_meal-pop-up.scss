@@ -21,11 +21,11 @@
   left: calc(50% - 250px);
 }
 
-.meal_pop_up_exit {
+#meal_pop_up_cross {
   position: absolute;
-  top: 15px;
+  top: 16px;
   right: 20px;
-  font-size: 25px !important;
+  cursor:  pointer;
 }
 
 .meal_pop_up_header {
