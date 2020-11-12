@@ -1,8 +1,64 @@
+// Fonction pour mettre en forme le prix
+
+const formatPrice = (price) => {
+  return price.toFixed(2).replace('.',',');
+}
+
+// Fonctions de modification des nombres sur tous les boutons + et - de la page
+// argument : element !!!
+
+const increaseQuantityNumber = (element) => {
+  const quantity = parseInt(element.previousElementSibling.innerText, 10);
+  const newQuantity = quantity + 1;
+  element.previousElementSibling.innerText = newQuantity;
+  return newQuantity;
+}
+
+const decreaseQuantityNumber = (element) => {
+  const quantity = parseInt(element.nextElementSibling.innerText, 10);
+  if (quantity > 1) {
+    const newQuantity = quantity - 1;
+    element.nextElementSibling.innerText = newQuantity;
+    return newQuantity;
+  } else {
+    return quantity;
+  }
+}
+
+// Fin
+
+const updatePopUpTotal = (quantity) => {
+  const price = document.getElementById('meal-pop-up').dataset.price;
+  const total = formatPrice(parseFloat(quantity) * parseFloat(price));
+  document.getElementById('meal-pop-up-total-btn').innerText = `Total ${total}€`;
+}
+
+const increaseQuantityMealPopUp = () => {
+  const element = document.getElementById('meal-pop-up-plus-btn');
+  element.addEventListener('click', (event) => {
+    const quantity = increaseQuantityNumber(element);
+    updatePopUpTotal(quantity);
+  });
+}
+
+const decreaseQuantityMealPopUp = () => {
+  const element = document.getElementById('meal-pop-up-minus-btn');
+  element.addEventListener('click', (event) => {
+    const quantity = decreaseQuantityNumber(element);
+    updatePopUpTotal(quantity);
+  });
+}
+
+increaseQuantityMealPopUp()
+decreaseQuantityMealPopUp()
+
+// FIN
 
 const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-name').innerHTML = data.name;
-  document.getElementById('meal-pop-up-total-btn').innerHTML = data.price;
+  document.getElementById('meal-pop-up-total-btn').innerHTML = `Total ${formatPrice(data.price)}€`;
   document.getElementById('meal-pop-up').dataset.id = data.id;
+  document.getElementById('meal-pop-up').dataset.price = data.price;
 }
 
 const getMealDetails = (id) => {
