@@ -1,3 +1,4 @@
+//// PART 1 /////////////////////////////////////////////////////////////
 // Fonction pour mettre en forme le prix
 
 const formatPrice = (price) => {
@@ -53,12 +54,48 @@ increaseQuantityMealPopUp()
 decreaseQuantityMealPopUp()
 
 // FIN
+//// PART 2 /////////////////////////////////////////////////////////////
 
-const isTheMealInTheBasket = (mealId, basketId) => {
+
+const updateBasketContent = (data) => {
+  const list = document.getElementById('basket-suborder-list');
+  // console.log(list);
+  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity))
+  list.insertAdjacentHTML('beforeend',
+    `<div class='basket-suborder-area flex-row-sb-center w-100'>
+      <div class='flex-row-center-center'>
+        <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
+        <p class='grey-16 basket-suborder-number flex-row-center-center'>${data.quantity}</p>
+        <div class='plus-btn pointer very-light-grey-14'><i class="fas fa-plus-circle"></i></div>
+        <div class='ml-3'>
+          <p class='grey-medium-16'>${data.meal_name}</p>
+        </div>
+      </div>
+      <p class='grey-medium-16'>${price}€</p>
+    </div>`);
+}
+
+const createSuborder = (mealId, basketId, quantity) => {
+  console.log(mealId, basketId, quantity);
+  fetch('/suborders', {
+    method: 'POST',
+    body: JSON.stringify({ meal_id: mealId, basket_id: basketId, quantity: quantity })
+  })
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      updateBasketContent(data);
+    });
+}
+
+const isTheMealInTheBasket = (mealId, basketId, quantity) => {
   fetch(`/meals/${mealId}/baskets/${basketId}`)
     .then(response => response.json())
     .then((data) => {
       console.log(data);
+      if (data == 0) {
+        createSuborder(mealId, basketId, quantity);
+      }
     });
 }
 
@@ -66,11 +103,15 @@ const addSuborderToBasket = () => {
   document.getElementById('meal-pop-up-total-btn').addEventListener('click', (event) => {
     const mealId = document.getElementById('meal-pop-up').dataset.id;
     const basketId = document.querySelector('.basket-card').dataset.id;
-    isTheMealInTheBasket(mealId, basketId);
+    const quantity = document.getElementById('meal-pop-up-quantity').innerText;
+    isTheMealInTheBasket(mealId, basketId, quantity);
   });
 }
 
 addSuborderToBasket()
+
+
+//// PART 3 /////////////////////////////////////////////////////////////
 // Apparation du pop up
 
 const updatePopUpDetails = (data) => {

@@ -48,32 +48,22 @@
           <div class='small-btn'>Modifier</div>
         </div>
 
-        <div class='basket-suborder-area flex-row-sb-center w-100'>
-          <div class='flex-row-center-center'>
-            <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
-            <p class='grey-16 basket-suborder-number flex-row-center-center'>3</p>
-            <div class='plus-btn pointer very-light-grey-14'><i class="fas fa-plus-circle"></i></div>
-            <div class='ml-3'>
-              <p class='grey-medium-16'>Hamburger</p>
-            </div>
-          </div>
-          <p class='grey-medium-16'>13 €</p>
-        </div>
-
-        <% @suborders.each do |suborder| %>
-          <div class='basket-suborder-area flex-row-sb-center w-100'>
-            <div class='flex-row-center-center'>
-              <i class="fas fa-minus-circle very-light-grey-14"></i>
-              <p class='grey-16 basket-suborder-number flex-row-center-center'>3</p>
-              <i class="fas fa-plus-circle very-light-grey-14"></i>
-              <div class='ml-3'>
-                <p class='grey-medium-16 mb-2'><%= suborder.meal.name %></p>
-                <p>4 personnes</p>
+        <div id='basket-suborder-list' class='w-100 h-100'>
+          <% @suborders.each do |suborder| %>
+            <div class='basket-suborder-area flex-row-sb-center w-100'>
+              <div class='flex-row-center-center'>
+                <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
+                <p class='grey-16 basket-suborder-number flex-row-center-center'><%= suborder.quantity %></p>
+                <div class='plus-btn pointer very-light-grey-14'><i class="fas fa-plus-circle"></i></div>
+                <div class='ml-3'>
+                  <p class='grey-medium-16'><%= suborder.meal.name %></p>
+                  <!-- <p>4 personnes</p> -->
+                </div>
               </div>
+              <p class='grey-medium-16'><%= ('%.2f' % (suborder.meal.price)).gsub('.',',') %>€</p>
             </div>
-            <p class='grey-medium-16'><%= suborder.meal.price %></p>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
 
         <div class='basket-total-area flex-row-sb-center w-100'>
           <p class='grey-medium-16'>Total</p>
