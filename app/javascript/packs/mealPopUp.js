@@ -1,4 +1,4 @@
-//// PART 1 /////////////////////////////////////////////////////////////
+/// PART 1 /////////////////////////////////////////////////////////////
 // Fonction pour mettre en forme le prix
 
 const formatPrice = (price) => {
@@ -62,7 +62,7 @@ const updateBasketContent = (data) => {
   // console.log(list);
   const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity))
   list.insertAdjacentHTML('beforeend',
-    `<div class='basket-suborder-area flex-row-sb-center w-100'>
+    `<div id='suborder-${data.suborder_id}' class='basket-suborder-area flex-row-sb-center w-100'>
       <div class='flex-row-center-center'>
         <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
         <p class='grey-16 basket-suborder-number flex-row-center-center'>${data.quantity}</p>
@@ -71,12 +71,12 @@ const updateBasketContent = (data) => {
           <p class='grey-medium-16'>${data.meal_name}</p>
         </div>
       </div>
-      <p class='grey-medium-16'>${price}€</p>
+      <p class='basket-suborder-price grey-medium-16'>${price}€</p>
     </div>`);
 }
 
 const createSuborder = (mealId, basketId, quantity) => {
-  console.log(mealId, basketId, quantity);
+  // console.log(mealId, basketId, quantity);
   fetch('/suborders', {
     method: 'POST',
     body: JSON.stringify({ meal_id: mealId, basket_id: basketId, quantity: quantity })
@@ -88,6 +88,26 @@ const createSuborder = (mealId, basketId, quantity) => {
     });
 }
 
+const updateSuborderContentInBasket = (data) => {
+  const suborder = document.getElementById(`suborder-${data.suborder_id}`);
+  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity))
+  suborder.querySelector('.basket-suborder-number').innerText = data.quantity;
+  suborder.querySelector('.basket-suborder-price').innerText = `${price}€`;
+}
+
+const updateSuborder = (suborderId, quantity) => {
+  // console.log(mealId, basketId, quantity);
+  fetch(`/suborders/${suborderId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ quantity: quantity })
+  })
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      updateSuborderContentInBasket(data);
+    });
+}
+
 const isTheMealInTheBasket = (mealId, basketId, quantity) => {
   fetch(`/meals/${mealId}/baskets/${basketId}`)
     .then(response => response.json())
@@ -95,6 +115,9 @@ const isTheMealInTheBasket = (mealId, basketId, quantity) => {
       console.log(data);
       if (data == 0) {
         createSuborder(mealId, basketId, quantity);
+      } else {
+        const suborderId = data;
+        updateSuborder(suborderId, quantity);
       }
     });
 }
@@ -104,6 +127,7 @@ const addSuborderToBasket = () => {
     const mealId = document.getElementById('meal-pop-up').dataset.id;
     const basketId = document.querySelector('.basket-card').dataset.id;
     const quantity = document.getElementById('meal-pop-up-quantity').innerText;
+    // console.log(mealId, basketId, quantity);
     isTheMealInTheBasket(mealId, basketId, quantity);
   });
 }
@@ -119,6 +143,7 @@ const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-total-btn').innerHTML = `Total ${formatPrice(data.price)}€`;
   document.getElementById('meal-pop-up').dataset.id = data.id;
   document.getElementById('meal-pop-up').dataset.price = data.price;
+  document.getElementById('meal-pop-up-quantity').innerHTML = 1;
 }
 
 const getMealDetails = (id) => {

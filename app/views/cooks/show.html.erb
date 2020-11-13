@@ -50,7 +50,7 @@
 
         <div id='basket-suborder-list' class='w-100 h-100'>
           <% @suborders.each do |suborder| %>
-            <div class='basket-suborder-area flex-row-sb-center w-100'>
+            <div id='suborder-<%= suborder.id %>' class='basket-suborder-area flex-row-sb-center w-100'>
               <div class='flex-row-center-center'>
                 <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
                 <p class='grey-16 basket-suborder-number flex-row-center-center'><%= suborder.quantity %></p>
@@ -60,14 +60,14 @@
                   <!-- <p>4 personnes</p> -->
                 </div>
               </div>
-              <p class='grey-medium-16'><%= ('%.2f' % (suborder.meal.price)).gsub('.',',') %>€</p>
+              <p class='basket-suborder-price grey-medium-16'><%= suborder.formatted_total_price %>€</p>
             </div>
           <% end %>
         </div>
 
         <div class='basket-total-area flex-row-sb-center w-100'>
           <p class='grey-medium-16'>Total</p>
-          <p class='grey-medium-16'>16,00 €</p>
+          <p class='grey-medium-16'><%= @basket.formatted_total_price %> €</p>
         </div>
       </div>
       <!-- Fin du panier -->
