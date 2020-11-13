@@ -1,13 +1,13 @@
-/// PART 1 /////////////////////////////////////////////////////////////
-// Fonction pour mettre en forme le prix
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// INTRO : MÉTHODES GÉNÉRALES ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Formattage des pric en js
 const formatPrice = (price) => {
   return price.toFixed(2).replace('.',',');
 }
 
-// Fonctions de modification des nombres sur tous les boutons + et - de la page
-// argument : element !!!
-
+// Modification des quantités avec les boutons + et - de la page
 const increaseQuantityNumber = (element) => {
   const quantity = parseInt(element.previousElementSibling.innerText, 10);
   const newQuantity = quantity + 1;
@@ -15,18 +15,22 @@ const increaseQuantityNumber = (element) => {
   return newQuantity;
 }
 
-const decreaseQuantityNumber = (element) => {
+const decreaseQuantityNumber = (element, deleteOption) => {
   const quantity = parseInt(element.nextElementSibling.innerText, 10);
   if (quantity > 1) {
     const newQuantity = quantity - 1;
     element.nextElementSibling.innerText = newQuantity;
     return newQuantity;
+  } else if (quantity == 1 && deleteOption == true) {
+    return 0
   } else {
     return quantity;
   }
 }
 
-// Fin
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// PART 1 : MODIFICATIONS DES QUANTITÉS ET DU TOTAL DANS LE POP-UP ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const updatePopUpTotal = (quantity) => {
   const price = document.getElementById('meal-pop-up').dataset.price;
@@ -37,7 +41,7 @@ const updatePopUpTotal = (quantity) => {
 const increaseQuantityMealPopUp = () => {
   const element = document.getElementById('meal-pop-up-plus-btn');
   element.addEventListener('click', (event) => {
-    const quantity = increaseQuantityNumber(element);
+    const quantity = increaseQuantityNumber(element); // UTILISE UNE FONCTION GÉNÉRIQUE (INTRO)
     updatePopUpTotal(quantity);
   });
 }
@@ -45,7 +49,7 @@ const increaseQuantityMealPopUp = () => {
 const decreaseQuantityMealPopUp = () => {
   const element = document.getElementById('meal-pop-up-minus-btn');
   element.addEventListener('click', (event) => {
-    const quantity = decreaseQuantityNumber(element);
+    const quantity = decreaseQuantityNumber(element); // UTILISE UNE FONCTION GÉNÉRIQUE (INTRO)
     updatePopUpTotal(quantity);
   });
 }
@@ -53,9 +57,9 @@ const decreaseQuantityMealPopUp = () => {
 increaseQuantityMealPopUp()
 decreaseQuantityMealPopUp()
 
-// FIN
-//// PART 2 /////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// PART 2 : AJOUT OU MODIFICATION D'UN SUBORDER DEPUIS LE POP-UP ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const updateBasketContent = (data) => {
   const list = document.getElementById('basket-suborder-list');
@@ -134,9 +138,9 @@ const addSuborderToBasket = () => {
 
 addSuborderToBasket()
 
-
-//// PART 3 /////////////////////////////////////////////////////////////
-// Apparation du pop up
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// PART 3 : APPARITION/DISPARITION DU POP-UP /////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-name').innerHTML = data.name;
@@ -174,4 +178,42 @@ const hideMealPopUp = () => {
 
 displayMealPopUp()
 hideMealPopUp()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// PART 4 : GESTION DES QUANTITÉS SUR LE PANIER (BASKET) /////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const increaseQuantitySuborder = () => {
+  document.querySelectorAll('.plus-btn').forEach((element) => {
+    element.addEventListener('click', (event) => {
+      const quantity = increaseQuantityNumber(element); // UTILISE UNE FONCTION GÉNÉRIQUE (INTRO)
+      // updateSuborderQuantity(element, quantity);
+    });
+  });
+}
+
+const decreaseQuantitySuborder = () => {
+  document.querySelectorAll('.minus-btn').forEach((element) => {
+    element.addEventListener('click', (event) => {
+      const quantity = decreaseQuantityNumber(element, true); // UTILISE UNE FONCTION GÉNÉRIQUE (INTRO)
+      if (quantity == 0) {
+        // deleteSuborder(element);
+      } else {
+        // updateSuborderQuantity(element, quantity);
+      }
+    });
+  });
+}
+
+increaseQuantitySuborder()
+decreaseQuantitySuborder()
+
+
+
+
+
+
+
+
+
 
