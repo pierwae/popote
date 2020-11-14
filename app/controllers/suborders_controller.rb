@@ -23,4 +23,9 @@ class SubordersController < ApplicationController
                    price: suborder.meal.price,
                    quantity: suborder.quantity }.to_json
   end
+
+  def destroy
+    Suborder.find(params[:id]).destroy
+    render json: true.to_json
+  end
 end

@@ -13,4 +13,9 @@ class BasketsController < ApplicationController
       render json: 0.to_json
     end
   end
+
+  def total_price
+    total_price = Basket.find(params[:id]).formatted_total_price
+    render json: total_price.to_json
+  end
 end
