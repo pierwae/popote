@@ -24,7 +24,7 @@ const calculBasketTotalPrice = () => {
 
 const updatePopUpDetails = (data) => {
   document.getElementById('meal-pop-up-name').innerHTML = data.name;
-  document.getElementById('meal-pop-up-total-btn').innerHTML = `Total ${formatPrice(data.price)}€`;
+  document.getElementById('meal-pop-up-total-btn').innerHTML = `Total ${formatPrice(data.price)} €`;
   document.getElementById('meal-pop-up').dataset.id = data.id;
   document.getElementById('meal-pop-up').dataset.price = data.price;
   document.getElementById('meal-pop-up-quantity').innerHTML = 1;

@@ -2,9 +2,11 @@ import { formatPrice } from './mealPopUp';
 import { calculBasketTotalPrice } from './mealPopUp';
 import { selectNewSuborderQuantityButtons } from './quantityButtons';
 
+
+
 const updateBasketContent = (data) => {
   const list = document.getElementById('basket-suborder-list');
-  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity))
+  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity)) // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
   const htmlContent = `<div data-id='${data.suborder_id}' id='suborder-${data.suborder_id}' class='basket-suborder-area flex-row-sb-center w-100'>
                         <div class='flex-row-center-center'>
                           <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
@@ -17,8 +19,8 @@ const updateBasketContent = (data) => {
                         <p class='basket-suborder-price grey-medium-16'>${price} €</p>
                       </div>`
   list.insertAdjacentHTML('beforeend', htmlContent);
-  selectNewSuborderQuantityButtons(data.suborder_id); // RÉFÉRENCE À UNE MÉTHODE QTT !!!
-  calculBasketTotalPrice();
+  selectNewSuborderQuantityButtons(data.suborder_id); // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
+  calculBasketTotalPrice(); // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
 }
 
 const createSuborder = (mealId, basketId, quantity) => {
@@ -34,10 +36,10 @@ const createSuborder = (mealId, basketId, quantity) => {
 
 const updateSuborderContentInBasket = (data) => {
   const suborder = document.getElementById(`suborder-${data.suborder_id}`);
-  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity))
+  const price = formatPrice(parseFloat(data.price) * parseFloat(data.quantity)) // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
   suborder.querySelector('.basket-suborder-number').innerText = data.quantity;
   suborder.querySelector('.basket-suborder-price').innerText = `${price} €`;
-  calculBasketTotalPrice();
+  calculBasketTotalPrice(); // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
 }
 
 const deleteSuborderHtml = (suborderId) => {
@@ -50,8 +52,7 @@ const deleteSuborder = (suborderId) => {
   })
     .then(response => response.json())
     .then((data) => {
-      // console.log(data);
-      calculBasketTotalPrice();
+      calculBasketTotalPrice(); // RÉFÉRENCE À UNE MÉTHODE IMPORTÉE
     });
 }
 

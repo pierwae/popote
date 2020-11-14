@@ -30,7 +30,7 @@ const decreaseQuantityNumber = (element, deleteOption) => {
 const updatePopUpTotal = (quantity) => {
   const price = document.getElementById('meal-pop-up').dataset.price;
   const total = formatPrice(parseFloat(quantity) * parseFloat(price));
-  document.getElementById('meal-pop-up-total-btn').innerText = `Total ${total}€`;
+  document.getElementById('meal-pop-up-total-btn').innerText = `Total ${total} €`;
 }
 
 const increaseQuantityMealPopUp = () => {
