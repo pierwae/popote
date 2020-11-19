@@ -30,11 +30,11 @@
         <% end %>
 
         <li class="nav-item dropdown mt-10px mt-md-0">
-          <div class='user-menu flex-row-sb-center' id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div id='open-navbar-menu' class='user-menu flex-row-sb-center' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!-- id="navbarDropdown" -->
             <div class='bar-menu flex-row-center-center'><i class="fas fa-bars"></i></div>
             <i class="fas fa-user-circle user-logo"></i>
           </div>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <% if !signed_in? %>
               <%= link_to "Connexion", new_user_session_path, class: "dropdown-item" %>
               <%= link_to "Inscription", new_user_registration_path, class: "dropdown-item" %>
@@ -42,11 +42,10 @@
               <%= link_to "Mes informations", '#', class: "dropdown-item" %>
               <%= link_to "Mes commandes", '#', class: "dropdown-item" %>
               <%= link_to "Historique", '#', class: "dropdown-item" %>
-            <% end %>
+            <% end %> -->
           </div>
         </li>
       </ul>
     </div>
   </div>
 </div>
-

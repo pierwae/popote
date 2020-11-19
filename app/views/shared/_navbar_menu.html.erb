@@ -1,0 +1,48 @@
+<div id='navbar-menu' class='navbar-menu meal_pop_up_bg_filter hidden' >
+  <div class='nav-menu'>
+
+    <div class='nav-menu-header flex-row-start-center'>
+      <% if signed_in? %>
+        <div class='nav-menu-profil-picture mr-2' ></div>
+        <div class='nav-menu-profil-details flex-column-sb'>
+          <h4>Claire Denis</h4>
+          <div class='cook-sticker flex-column-center-center'>CUISINIER</div>
+        </div>
+      <% else %>
+        <%= link_to homepage_path, class: "" do %>
+          <%= image_tag 'logo.png', class: 'navbar-logo' %>
+        <% end %>
+      <% end %>
+
+      <div id='close-navbar-menu' class='nav-menu-cross'><i class="fas fa-times"></i></div>
+    </div>
+
+    <div class='nav-menu-body'>
+
+      <% if signed_in? %>
+        <div class='nav-menu-item grey-medium-16'>Mon compte</div>
+        <div class='nav-menu-item grey-medium-16'>Mes commandes</div>
+
+        <div class='nav-menu-cook-area'>
+          <h3 class='nav-menu-item'>Espace cuisinier</h3>
+          <div class='nav-menu-item grey-medium-16'>Mes missions</div>
+          <div class='nav-menu-item grey-medium-16'>Mes disponibilités</div>
+          <div class='nav-menu-item grey-medium-16'>Mes recettes</div>
+          <div class='nav-menu-item grey-medium-16'>Mon profil</div>
+        </div>
+
+        <div class='nav-menu-item grey-medium-16'>FAQ</div>
+        <div class='nav-menu-item grey-medium-16'>Déconnexion</div>
+      <% else %>
+        <%= link_to new_user_session_path do %>
+          <div class='nav-menu-item grey-medium-16'>Connexion</div>
+        <% end %>
+        <%= link_to new_user_registration_path do %>
+          <div class='nav-menu-item grey-medium-16'>Inscription</div>
+        <% end %>
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

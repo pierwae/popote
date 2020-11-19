@@ -6,7 +6,11 @@ h3 {
   font-size: 16px;
 }
 
-h3, h2 {
+h4 {
+  font-size: 14px;
+}
+
+h3, h2, h4 {
   color: $dark-grey;
   font-weight: 500;
   margin: 0px;
@@ -148,6 +152,13 @@ a:link {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+}
+
+.flex-column-center-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
