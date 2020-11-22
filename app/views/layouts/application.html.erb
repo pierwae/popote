@@ -14,7 +14,8 @@
   </head>
 
   <body
-    <% if params[:controller] == 'users' && params[:action] == 'show' %>
+    <% if (params[:controller] == 'users' && params[:action] == 'show') ||
+          (params[:controller] == 'baskets' && params[:action] == 'show') %>
       class='beige-bg'
     <% end %>
   >

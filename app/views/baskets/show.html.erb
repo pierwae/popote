@@ -1,0 +1,36 @@
+<div class='dashboard-container'>
+  <h2>Récapitulatif de la commande</h2>
+
+  <% @basket.suborders.each do |suborder| %>
+
+    <div class='meal-card-container'>
+      <div data-id='<%= suborder.meal.id %>'  class='meal-card white-card flex-row-sb-center'>
+        <%= render partial: 'shared/meal_card_content', locals: {meal: suborder.meal} %>
+      </div>
+    </div>
+
+  <% end %>
+
+  <h2>Mes informations</h2>
+
+  <div class='meal-card-container'>
+    <div class='meal-card white-card flex-row-sb-center'>
+
+      <div xlass='flex-column-sb-center'>
+        <div class='basket-profil-picture' ></div>
+        <h4>Claire Denis</h4>
+      </div>
+
+      <div>
+        <p>23 rue Jean Jaurès </p>
+        <p class='mb-2'>67000 Strasbourg</p>
+        <p>claire.denis@gmail.com</p>
+        <p>06.12.34.56.78</p>
+      </div>
+
+      <div class='small-btn'>Modifier</div>
+
+    </div>
+  </div>
+
+</div>
