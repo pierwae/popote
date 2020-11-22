@@ -32,7 +32,9 @@
         </div>
 
         <div class='nav-menu-item grey-medium-16'>FAQ</div>
-        <div class='nav-menu-item grey-medium-16'>Déconnexion</div>
+        <%= link_to destroy_user_session_path, method: 'DELETE' do %>
+          <div class='nav-menu-item grey-medium-16'>Déconnexion</div>
+        <% end %>
       <% else %>
         <%= link_to new_user_session_path do %>
           <div class='nav-menu-item grey-medium-16'>Connexion</div>

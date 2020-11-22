@@ -14,5 +14,8 @@ Rails.application.routes.draw do
   get 'meals/:meals_id/baskets/:id', to: 'baskets#the_meal_in_the_basket?', as: 'is_the_meal_in_the_basket'
 
   resources :suborders, only: [:create, :update, :destroy]
+
   get 'user', to: 'users#show', as: 'user'
+  patch 'update_user_details/:id', to: 'users#update_details', as: 'update_user_details'
+  patch 'update_user_address/:id', to: 'users#update_address', as: 'update_user_address'
 end
