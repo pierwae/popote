@@ -1,58 +1,121 @@
-<div class='dashboard-container'>
-  <h2>Mon compte</h2>
+<div class='orange-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Mon compte</h2>
+  </div>
+</div>
 
-  <div class='dashboard-card my-2'>
+<div class='dashboard-container page-lifted'>
+
+  <!-- DÉTAILS PART -->
+
+  <div class='dashboard-card mt-0'>
     <div class='dashboard-card-header flex-row-start-center'>
       <h3 class='dashboard-card-title'>Détails</h3>
     </div>
     <div class='dashboard-card-body'>
 
-      <%= simple_form_for @user, url: '#' do |f| %>
+      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
         <%= f.error_notification %>
-        <div class='flex-row-sb-center'>
-          <%= f.input :first_name, label: false, placeholder: 'Prénom' %>
-          <%= f.input :last_name, label: false, placeholder: 'Nom' %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :first_name, label: false, placeholder: 'Prénom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :last_name, label: false, placeholder: 'Nom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
         </div>
-        <%= f.input :email, label: false, placeholder: 'Email', input_html: { autocomplete: 'email' } %>
-        <%= f.input :phone_number, label: false, placeholder: 'Téléphone' %>
-        <%= f.button :submit, class: "small-btn", value: 'Modifier' %>
+        <%= f.input :email, label: false, placeholder: 'Email',
+            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.input :phone_number, label: false, placeholder: 'Téléphone',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications' %>
       <% end %>
 
     </div>
-
   </div>
 
-  <div class='dashboard-card my-2'>
-    <div class='dashboard-card-header flex-row-start-center'>
-      <h3 class='dashboard-card-title'>Détails</h3>
-    </div>
-    <div class='dashboard-card-body'>
-      <div class='flex-row-sb-center'>
-        <div class='static-form-short-item flex-row-start-center'>Jacques</div>
-        <div class='static-form-short-item flex-row-start-center'>Durand</div>
-      </div>
-      <div class='static-form-item flex-row-start-center'>jacques.durand@gmail.com</div>
-      <div class='static-form-item flex-row-start-center'>07.12.34.56.78</div>
-      <div class='small-orange-btn'>Modifier</div>
+  <!-- ADRESSE PART -->
 
-    </div>
-
-  </div>
-
-  <div class='dashboard-card my-2'>
+  <div class='dashboard-card'>
     <div class='dashboard-card-header flex-row-start-center'>
       <h3 class='dashboard-card-title'>Adresse</h3>
     </div>
     <div class='dashboard-card-body'>
-      <div class='flex-row-sb-center'>
-        <div class='static-form-short-item flex-row-start-center'>Strasbourg</div>
-        <div class='static-form-short-item flex-row-start-center'>67000</div>
-      </div>
-      <div class='static-form-item flex-row-start-center'>2 rue du tertre</div>
-      <div class='small-orange-btn'>Modifier</div>
+
+      <%= simple_form_for @user, url: update_user_address_path(@user) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :address, label: false, placeholder: 'Adresse',
+            input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :city, label: false, placeholder: 'Ville',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :zip, label: false, placeholder: 'Code Postal',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+        </div>
+        <%= f.button :submit, id: 'update-address-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications' %>
+      <% end %>
 
     </div>
-
   </div>
 
+  <!-- PASSWORD PART -->
+
+  <div class='dashboard-card'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Mot de passe</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <p class='mb-3' >
+        Pour modifier votre mot de passe, veuillez cliquer ci-dessous.
+        Les instructions pour modifier votre mot de passe vous seront
+        envoyées à votre addresse mail: <%= @user.email %>.
+      </p>
+
+      <%= simple_form_for @user, url: '#' do |f| %>
+        <%= f.error_notification %>
+        <%= f.button :submit, class: 'red-btn-xl', value: 'Modifier mon mot de passe' %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- DELETE ACCOUNT PART -->
+
+  <div class='dashboard-card'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Supprimer définitivement mon compte</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <p class='mb-3' >
+        Pour supprimer définitivement votre compte, vous devez saisir votre mot de passe.
+        Une fois la suppression effectuée, il ne sera plus possible de réactiver votre compte.
+      </p>
+      <p class='mb-3' >
+        Si vous avez oublié votre mot de passe,
+        vous pouvez créer un nouveau mot de passe.
+      </p>
+
+      <%= simple_form_for @user, url: '#' do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :password, label: false, placeholder: 'Mot de passe',
+            input_html: { class: 'static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, class: 'red-btn-xl', value: 'Continuer' %>
+      <% end %>
+
+    </div>
+  </div>
+
+
+
 </div>
+
+
+  <%= javascript_pack_tag 'userShow'%>
