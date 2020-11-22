@@ -20,7 +20,10 @@
     <div class='nav-menu-body'>
 
       <% if signed_in? %>
-        <div class='nav-menu-item grey-medium-16'>Mon compte</div>
+
+        <%= link_to account_path do %>
+          <div class='nav-menu-item grey-medium-16'>Mon compte</div>
+        <% end %>
         <div class='nav-menu-item grey-medium-16'>Mes commandes</div>
 
         <div class='nav-menu-cook-area'>

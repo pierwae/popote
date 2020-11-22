@@ -30,7 +30,7 @@
             input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
         <%= f.input :phone_number, label: false, placeholder: 'Téléphone',
             input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications' %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
       <% end %>
 
     </div>
@@ -58,7 +58,7 @@
                 input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
           </div>
         </div>
-        <%= f.button :submit, id: 'update-address-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications' %>
+        <%= f.button :submit, id: 'update-address-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
       <% end %>
 
     </div>
@@ -80,7 +80,7 @@
 
       <%= simple_form_for @user, url: '#' do |f| %>
         <%= f.error_notification %>
-        <%= f.button :submit, class: 'red-btn-xl', value: 'Modifier mon mot de passe' %>
+        <%= f.button :submit, class: 'red-btn-xl', value: 'Modifier mon mot de passe', data: { disable_with: false } %>
       <% end %>
 
     </div>
@@ -107,7 +107,7 @@
         <%= f.error_notification %>
         <%= f.input :password, label: false, placeholder: 'Mot de passe',
             input_html: { class: 'static-form-item flex-row-start-center' } %>
-        <%= f.button :submit, class: 'red-btn-xl', value: 'Continuer' %>
+        <%= f.button :submit, class: 'red-btn-xl', value: 'Continuer', data: { disable_with: false } %>
       <% end %>
 
     </div>

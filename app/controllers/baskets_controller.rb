@@ -1,4 +1,8 @@
 class BasketsController < ApplicationController
+  def show
+    @basket = Basket.find(params[:id])
+  end
+
   def create
     basket = Basket.create
     render json: basket.to_json
