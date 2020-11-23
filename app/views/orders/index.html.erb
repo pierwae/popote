@@ -1,0 +1,40 @@
+<div class='orange-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Mes commandes</h2>
+  </div>
+</div>
+
+<div class='dashboard-container page-lifted'>
+
+  <!-- DÉTAILS PART -->
+
+  <div class='dashboard-card mt-0'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Détails</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
+        <%= f.error_notification %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :first_name, label: false, placeholder: 'Prénom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :last_name, label: false, placeholder: 'Nom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
+        </div>
+        <%= f.input :email, label: false, placeholder: 'Email',
+            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.input :phone_number, label: false, placeholder: 'Téléphone',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>
+
