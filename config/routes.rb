@@ -13,9 +13,15 @@ Rails.application.routes.draw do
   get 'basket_total_price/:id', to: 'baskets#total_price'
   get 'meals/:meals_id/baskets/:id', to: 'baskets#the_meal_in_the_basket?', as: 'is_the_meal_in_the_basket'
 
-  resources :suborders, only: [:create, :update, :destroy]
+  resources :basket_suborders, only: [:create, :update, :destroy]
 
-  get 'account', to: 'users#show', as: 'account'
   patch 'update_user_details/:id', to: 'users#update_details', as: 'update_user_details'
   patch 'update_user_address/:id', to: 'users#update_address', as: 'update_user_address'
+  patch 'baskets/:baskets_id/update_user_details/:id', to: 'users#update_details_from_basket_show', as: 'update_details_from_basket_show'
+
+  post 'baskets/:id/orders', to: 'orders#create', as: 'new_orders'
+
+  get 'account', to: 'users#show', as: 'account'
+  get 'account/orders', to: 'orders#index', as: 'orders'
+
 end

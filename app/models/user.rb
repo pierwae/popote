@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_one :cook
-  has_many :baskets, foreign_key: :customer_id
+  has_many :orders, foreign_key: :customer_id
 
   validates :first_name, presence: true
   validates :last_name, presence: true

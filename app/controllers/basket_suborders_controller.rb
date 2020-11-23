@@ -1,9 +1,9 @@
-class SubordersController < ApplicationController
+class BasketSubordersController < ApplicationController
   protect_from_forgery with: :null_session
 
   def create
     body = JSON.parse(request.body.read)
-    suborder = Suborder.create(meal_id: body['meal_id'],
+    suborder = BasketSuborder.create(meal_id: body['meal_id'],
                                basket_id: body['basket_id'],
                                quantity: body['quantity'])
 
@@ -15,7 +15,7 @@ class SubordersController < ApplicationController
 
   def update
     body = JSON.parse(request.body.read)
-    suborder = Suborder.find(params[:id])
+    suborder = BasketSuborder.find(params[:id])
     suborder.quantity += Integer(body['quantity'])
     success = suborder.save
     render json: { success: success,
@@ -25,7 +25,7 @@ class SubordersController < ApplicationController
   end
 
   def destroy
-    Suborder.find(params[:id]).destroy
+    BasketSuborder.find(params[:id]).destroy
     render json: true.to_json
   end
 end

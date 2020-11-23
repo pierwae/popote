@@ -24,7 +24,9 @@
         <%= link_to account_path do %>
           <div class='nav-menu-item grey-medium-16'>Mon compte</div>
         <% end %>
-        <div class='nav-menu-item grey-medium-16'>Mes commandes</div>
+        <%= link_to orders_path do %>
+          <div class='nav-menu-item grey-medium-16'>Mes commandes</div>
+        <% end %>
 
         <div class='nav-menu-cook-area'>
           <h3 class='nav-menu-item'>Espace cuisinier</h3>

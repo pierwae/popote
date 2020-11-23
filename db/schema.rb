@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_213518) do
+ActiveRecord::Schema.define(version: 2020_11_23_203353) do
+
+  create_table "basket_suborders", force: :cascade do |t|
+    t.integer "meal_id", null: false
+    t.integer "basket_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["basket_id"], name: "index_basket_suborders_on_basket_id"
+    t.index ["meal_id"], name: "index_basket_suborders_on_meal_id"
+  end
 
   create_table "baskets", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -50,22 +60,22 @@ ActiveRecord::Schema.define(version: 2020_11_02_213518) do
     t.string "status"
     t.float "total_price"
     t.date "date"
-    t.integer "basket_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["basket_id"], name: "index_orders_on_basket_id"
+    t.string "instructions"
+    t.boolean "cgu_validation"
     t.index ["cook_id"], name: "index_orders_on_cook_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
   create_table "suborders", force: :cascade do |t|
-    t.integer "meal_id", null: false
-    t.integer "basket_id", null: false
+    t.integer "meal_id"
+    t.integer "order_id"
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["basket_id"], name: "index_suborders_on_basket_id"
     t.index ["meal_id"], name: "index_suborders_on_meal_id"
+    t.index ["order_id"], name: "index_suborders_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -83,16 +93,19 @@ ActiveRecord::Schema.define(version: 2020_11_02_213518) do
     t.string "city"
     t.string "phone_number"
     t.boolean "admin"
+    t.string "flat_number"
+    t.string "digicode"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "basket_suborders", "baskets"
+  add_foreign_key "basket_suborders", "meals"
   add_foreign_key "categories", "cooks"
   add_foreign_key "cooks", "users"
   add_foreign_key "meals", "categories"
-  add_foreign_key "orders", "baskets"
   add_foreign_key "orders", "cooks"
   add_foreign_key "orders", "users", column: "customer_id"
-  add_foreign_key "suborders", "baskets"
   add_foreign_key "suborders", "meals"
+  add_foreign_key "suborders", "orders"
 end

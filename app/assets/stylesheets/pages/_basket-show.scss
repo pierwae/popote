@@ -6,3 +6,38 @@
   margin: auto;
   margin-bottom: 8px;
 }
+
+.basket-form {
+  label {
+    color: $grey;
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 3px;
+    margin-bottom: 3px;
+  }
+
+  .inactive-input {
+    pointer-events: none;
+  }
+}
+
+.light-red-btn {
+  border: 1px solid $orange !important;
+  background-color: $white !important;
+  color: $orange !important;
+}
+
+.payement-area {
+  text-align: center;
+  background-color: $yellow;
+  border-radius: 5px;
+  padding: 25px 30px;
+  margin-bottom: 15px;
+
+  p {
+    font-size: 14px;
+    color: $dark-grey;
+    font-weight: 400;
+  }
+
+}

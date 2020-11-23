@@ -1,11 +1,10 @@
 class Basket < ApplicationRecord
-  has_many :suborders
-  has_many :orders
-  has_many :meals, through: :suborders
+  has_many :basket_suborders
+  has_many :meals, through: :basket_suborders
 
   def formatted_total_price
     total_price = 0.0
-    suborders.each do |suborder|
+    basket_suborders.each do |suborder|
       total_price += suborder.total_price
     end
 
