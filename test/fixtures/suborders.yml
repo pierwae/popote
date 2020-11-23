@@ -2,10 +2,10 @@
 
 one:
   meal: one
-  basket: one
+  order: one
   quantity: 1
 
 two:
   meal: two
-  basket: two
+  order: two
   quantity: 1

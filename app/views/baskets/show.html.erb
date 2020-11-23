@@ -1,36 +1,81 @@
-<div class='dashboard-container'>
-  <h2>Récapitulatif de la commande</h2>
+<div class='orange-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Chez Juju !</h2>
+  </div>
+</div>
 
-  <% @basket.suborders.each do |suborder| %>
+<div class='dashboard-container page-lifted'>
 
-    <div class='meal-card-container'>
-      <div data-id='<%= suborder.meal.id %>'  class='meal-card white-card flex-row-sb-center'>
-        <%= render partial: 'shared/meal_card_content', locals: {meal: suborder.meal} %>
-      </div>
+  <!-- ADRESSE PART -->
+
+  <div class='dashboard-card mt-0'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Adresse pour la prestation</h3>
     </div>
+    <div class='dashboard-card-body basket-form'>
 
-  <% end %>
+      <%= simple_form_for @user, url: update_user_address_path(@user) do |f| %>
+        <%= f.error_notification %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :flat_number, label: "Etage et numéro d'appartement", placeholder: 'ex : Appartement n°12',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :digicode, label: 'Digicode', placeholder: 'ex : B123',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+        </div>
+        <%= f.input :address, label: 'Adresse', placeholder: 'ex : 100 rue de Rivoli',
+            input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :city, label: 'Ville', placeholder: 'ex : Paris',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :zip, label: 'Code Postal', placeholder: 'ex : 75001',
+                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+          </div>
+        </div>
+        <%= f.input :phone_number, label: 'Numéro de téléphone', placeholder: 'ex : +33 6 12 34 56 78',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Modifier mes informations', data: { disable_with: false } %>
+      <% end %>
 
-  <h2>Mes informations</h2>
+    </div>
+  </div>
 
-  <div class='meal-card-container'>
-    <div class='meal-card white-card flex-row-sb-center'>
+  <!-- DÉTAILS PART -->
 
-      <div xlass='flex-column-sb-center'>
-        <div class='basket-profil-picture' ></div>
-        <h4>Claire Denis</h4>
-      </div>
+  <div class='dashboard-card'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Détails</h3>
+    </div>
+    <div class='dashboard-card-body'>
 
-      <div>
-        <p>23 rue Jean Jaurès </p>
-        <p class='mb-2'>67000 Strasbourg</p>
-        <p>claire.denis@gmail.com</p>
-        <p>06.12.34.56.78</p>
-      </div>
+      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
+        <%= f.error_notification %>
+        <div class='row'>
+          <div class='col-6'>
+            <%= f.input :first_name, label: false, placeholder: 'Prénom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
+          <div class='col-6'>
+            <%= f.input :last_name, label: false, placeholder: 'Nom',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+          </div>
+        </div>
+        <%= f.input :email, label: false, placeholder: 'Email',
+            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
 
-      <div class='small-btn'>Modifier</div>
+        <%= f.button :submit, id: '', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+      <% end %>
 
     </div>
   </div>
 
 </div>
+
+
+  <%= javascript_pack_tag 'userShow'%>

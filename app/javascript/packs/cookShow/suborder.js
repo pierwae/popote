@@ -24,7 +24,7 @@ const updateBasketContent = (data) => {
 }
 
 const createSuborder = (mealId, basketId, quantity) => {
-  fetch('/suborders', {
+  fetch('/basket_suborders', {
     method: 'POST',
     body: JSON.stringify({ meal_id: mealId, basket_id: basketId, quantity: quantity })
   })
@@ -47,7 +47,7 @@ const deleteSuborderHtml = (suborderId) => {
 }
 
 const deleteSuborder = (suborderId) => {
-  fetch(`/suborders/${suborderId}`, {
+  fetch(`/basket_suborders/${suborderId}`, {
     method: 'DELETE'
   })
     .then(response => response.json())
@@ -57,7 +57,7 @@ const deleteSuborder = (suborderId) => {
 }
 
 const updateSuborder = (suborderId, quantity) => {
-  fetch(`/suborders/${suborderId}`, {
+  fetch(`/basket_suborders/${suborderId}`, {
     method: 'PATCH',
     body: JSON.stringify({ quantity: quantity })
   })

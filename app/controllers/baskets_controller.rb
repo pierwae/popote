@@ -1,6 +1,10 @@
 class BasketsController < ApplicationController
+  before_action :authenticate_user!, except: %I[create the_meal_in_the_basket? total_price]
+
   def show
     @basket = Basket.find(params[:id])
+    @user   = current_user
+    @cook   = @basket.meals.first.category.cook
   end
 
   def create
@@ -12,7 +16,7 @@ class BasketsController < ApplicationController
     basket = Basket.find(params[:id])
     meal   = Meal.find(params[:meals_id])
     if basket.meals.include?(meal)
-      render json: Suborder.where(meal: meal, basket: basket).first.id.to_json
+      render json: BasketSuborder.where(meal: meal, basket: basket).first.id.to_json
     else
       render json: 0.to_json
     end

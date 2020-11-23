@@ -1,5 +1,8 @@
 puts '#1 Cleaning DB...'
 
+BasketSuborder.delete_all
+Basket.delete_all
+
 Meal.delete_all
 Category.delete_all
 Cook.delete_all
