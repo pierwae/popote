@@ -20,3 +20,24 @@
     pointer-events: none;
   }
 }
+
+.light-red-btn {
+  border: 1px solid $orange !important;
+  background-color: $white !important;
+  color: $orange !important;
+}
+
+.payement-area {
+  text-align: center;
+  background-color: $yellow;
+  border-radius: 5px;
+  padding: 25px 30px;
+  margin-bottom: 15px;
+
+  p {
+    font-size: 14px;
+    color: $dark-grey;
+    font-weight: 400;
+  }
+
+}

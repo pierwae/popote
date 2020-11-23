@@ -6,70 +6,73 @@
 
 <div class='dashboard-container page-lifted'>
 
-  <!-- ADRESSE PART -->
+  <!-- #1 ADRESSE DE LA PRESTATION -->
 
   <div class='dashboard-card mt-0'>
     <div class='dashboard-card-header flex-row-start-center'>
-      <h3 class='dashboard-card-title'>Adresse pour la prestation</h3>
+      <h3 class='dashboard-card-title'>#1 Adresse de la prestation</h3>
     </div>
     <div class='dashboard-card-body basket-form'>
 
-      <%= simple_form_for @user, url: update_user_address_path(@user) do |f| %>
+      <%= simple_form_for @user, url: update_details_from_basket_show_path(@basket, @user), method: 'PATCH' do |f| %>
         <%= f.error_notification %>
         <div class='row'>
           <div class='col-6'>
             <%= f.input :flat_number, label: "Etage et numéro d'appartement", placeholder: 'ex : Appartement n°12',
-                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
           </div>
           <div class='col-6'>
             <%= f.input :digicode, label: 'Digicode', placeholder: 'ex : B123',
-                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
           </div>
         </div>
         <%= f.input :address, label: 'Adresse', placeholder: 'ex : 100 rue de Rivoli',
-            input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
         <div class='row'>
           <div class='col-6'>
             <%= f.input :city, label: 'Ville', placeholder: 'ex : Paris',
-                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
           </div>
           <div class='col-6'>
             <%= f.input :zip, label: 'Code Postal', placeholder: 'ex : 75001',
-                input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
           </div>
         </div>
         <%= f.input :phone_number, label: 'Numéro de téléphone', placeholder: 'ex : +33 6 12 34 56 78',
-            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Modifier mes informations', data: { disable_with: false } %>
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
+        <%= f.button :submit, id: 'edit-details-btn', class: 'red-btn-xl light-red-btn', value: 'Modifier les informations', data: { disable_with: false } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl hidden', value: 'Enregistrer les informations', data: { disable_with: false } %>
       <% end %>
 
     </div>
   </div>
 
-  <!-- DÉTAILS PART -->
+  <!-- #2 PAYEMENT DE LA COMMANDE -->
 
   <div class='dashboard-card'>
     <div class='dashboard-card-header flex-row-start-center'>
-      <h3 class='dashboard-card-title'>Détails</h3>
+      <h3 class='dashboard-card-title'>#2 Finalisation de la commande</h3>
     </div>
-    <div class='dashboard-card-body'>
+    <div class='dashboard-card-body basket-form'>
 
-      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
-        <%= f.error_notification %>
-        <div class='row'>
-          <div class='col-6'>
-            <%= f.input :first_name, label: false, placeholder: 'Prénom',
-                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-          </div>
-          <div class='col-6'>
-            <%= f.input :last_name, label: false, placeholder: 'Nom',
-                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-          </div>
+      <%= simple_form_for @order, url: '#' do |f| %>
+        <%= f.input :instructions, as: :text, label: 'Avez-vous des instructions spécifiques pour votre cuisinier ?', placeholder: 'ex : ...',
+            input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+
+        <h3>Réglement de la commande</h3>
+        <div class='flex-row-sb-center my-3'>
+          <h4>Total 15,70€</h4>
+          <h4 class='orange-14 underline pointer'>Voir le panier</h4>
         </div>
-        <%= f.input :email, label: false, placeholder: 'Email',
-            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
 
-        <%= f.button :submit, id: '', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+        <div class='payement-area flex-row-center-center'>
+          <p>Une fois la commande confirmée, celle-ci doit être validée par le cuisinier.
+          C’est seulement cette étape franchie que la procédure de payement vous sera transmis.</p>
+        </div>
+
+        <%= f.input :cgu_validation, label: "J'ai bien pris connaissance des CGU... bla-bla-bla"  %>
+
+        <%= f.button :submit, id: '', class: 'red-btn-xl', value: 'Valider ma commande', data: { disable_with: false } %>
       <% end %>
 
     </div>
@@ -78,4 +81,4 @@
 </div>
 
 
-  <%= javascript_pack_tag 'userShow'%>
+  <%= javascript_pack_tag 'basketShow'%>

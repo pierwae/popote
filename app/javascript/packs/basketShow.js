@@ -1,18 +1,21 @@
-const displayUpdateDetailsBtn = () => {
+const enableInput = () => {
   document.querySelectorAll('.details-form-item').forEach((item) => {
-    item.addEventListener('keydown', (event) => {
-      document.getElementById('update-details-btn').classList.remove('inactive-btn');
-    });
+    item.classList.remove('inactive-input');
   });
 }
 
-const displayUpdateAddressBtn = () => {
-  document.querySelectorAll('.address-form-item').forEach((item) => {
-    item.addEventListener('keydown', (event) => {
-      document.getElementById('update-address-btn').classList.remove('inactive-btn');
-    });
+
+const displayUpdateDetailsBtn = () => {
+
+  const updateBtn = document.getElementById('update-details-btn');
+  const editBtn = document.getElementById('edit-details-btn');
+  editBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    enableInput();
+    editBtn.classList.add('hidden');
+    updateBtn.classList.remove('hidden');
   });
 }
+
 
 displayUpdateDetailsBtn()
-displayUpdateAddressBtn()

@@ -5,6 +5,7 @@ class BasketsController < ApplicationController
     @basket = Basket.find(params[:id])
     @user   = current_user
     @cook   = @basket.meals.first.category.cook
+    @order  = Order.create
   end
 
   def create
