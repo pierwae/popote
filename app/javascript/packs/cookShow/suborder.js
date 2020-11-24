@@ -68,7 +68,7 @@ const updateSuborder = (suborderId, quantity) => {
 }
 
 const isTheMealInTheBasket = (mealId, basketId, quantity) => {
-  fetch(`/meals/${mealId}/baskets/${basketId}`)
+  fetch(`/baskets/${basketId}/meals/${mealId}/presence_checking`)
     .then(response => response.json())
     .then((data) => {
       if (data == 0) {

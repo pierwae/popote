@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :orders, only: :create
     resources :cooks, only: :show
     resources :meals, only: [] do
-      get 'content_checking'
+      get 'presence_checking'
     end
   end
 

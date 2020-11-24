@@ -9,7 +9,7 @@ const formatPrice = (price) => {
 
 const calculBasketTotalPrice = () => {
   const basketId = document.querySelector('.basket-card').dataset.id;
-  fetch(`/basket_total_price/${basketId}`)
+  fetch(`/baskets/${basketId}/total_price`)
     .then(response => response.json())
     .then((data) => {
       document.getElementById('basket-price').innerText = `${data} €`
@@ -31,7 +31,7 @@ const updatePopUpDetails = (data) => {
 }
 
 const getMealDetails = (id) => {
-  fetch(`/meal_details/${id}`)
+  fetch(`/meals/${id}/details`)
     .then(response => response.json())
     .then((data) => {
       updatePopUpDetails(data);

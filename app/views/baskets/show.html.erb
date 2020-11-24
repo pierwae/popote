@@ -14,7 +14,7 @@
     </div>
     <div class='dashboard-card-body basket-form'>
 
-      <%= simple_form_for @user, url: update_details_from_basket_show_path(@basket, @user), method: 'PATCH' do |f| %>
+      <%= simple_form_for @user, url: user_update_details_path(@user), method: 'PATCH' do |f| %>
         <%= f.error_notification %>
         <div class='row'>
           <div class='col-6'>

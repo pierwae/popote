@@ -21,10 +21,10 @@
 
       <% if signed_in? %>
 
-        <%= link_to account_path do %>
+        <%= link_to user_path(current_user) do %>
           <div class='nav-menu-item grey-medium-16'>Mon compte</div>
         <% end %>
-        <%= link_to orders_path do %>
+        <%= link_to user_orders_path(current_user) do %>
           <div class='nav-menu-item grey-medium-16'>Mes commandes</div>
         <% end %>
 

@@ -17,7 +17,7 @@ class UsersController < ApplicationController
                                  :digicode,
                                  :flat_number)
 
-    User.find(params[:id]).update(user_details)
+    User.find(params[:user_id]).update(user_details)
     redirect_back(fallback_location: homepage_path)
   end
 end

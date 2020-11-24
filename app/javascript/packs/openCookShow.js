@@ -3,7 +3,7 @@ const redirectToCookShow = (cookId, basketId) => {
 }
 
 const createNewBasket = (cookId) => {
-  fetch('/new_basket')
+  fetch('/baskets/create')
     .then(response => response.json())
     .then((data) => {
       const basketId = data.id;

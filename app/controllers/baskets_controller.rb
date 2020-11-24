@@ -8,19 +8,9 @@ class BasketsController < ApplicationController
     @order  = Order.new
   end
 
-  def create_api
+  def create
     basket = Basket.create
     render json: basket.to_json
-  end
-
-  def the_meal_in_the_basket?
-    basket = Basket.find(params[:id])
-    meal   = Meal.find(params[:meals_id])
-    if basket.meals.include?(meal)
-      render json: BasketSuborder.where(meal: meal, basket: basket).first.id.to_json
-    else
-      render json: 0.to_json
-    end
   end
 
   def total_price

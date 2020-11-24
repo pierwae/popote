@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def create
     order_details = params.require(:order).permit(:instructions, :cgu_validation)
-    basket = Basket.find(params[:id])
+    basket = Basket.find(params[:basket_id])
     cook = basket.meals.first.category.cook
     order = Order.new(cook: cook,
                       customer_id: current_user.id,
@@ -22,6 +22,6 @@ class OrdersController < ApplicationController
       redirect_to homepage_path unless suborder.save
     end
 
-    redirect_to orders_path
+    redirect_to user_orders_path(current_user)
   end
 end
