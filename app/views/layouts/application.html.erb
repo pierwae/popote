@@ -15,7 +15,8 @@
 
   <body
     <% if (params[:controller] == 'users' && params[:action] == 'show') ||
-          (params[:controller] == 'baskets' && params[:action] == 'show') %>
+          (params[:controller] == 'baskets' && params[:action] == 'show') ||
+          (params[:controller] == 'orders' && params[:action] == 'index') %>
       class='beige-bg'
     <% end %>
   >

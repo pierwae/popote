@@ -2,26 +2,31 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home', as: 'homepage'
 
-  resources :cooks, only: [:index]
-  resources :baskets, only: [:show] do
-    resources :cooks, only: [:show]
+  resources :cooks, only: :index
+
+  namespace :cook_dashboard do
+    resources :cooks, only: :show
+    resources :orders, only: :index
   end
 
-  get 'meal_details/:id', to: 'meals#meal_details', as: 'meal_details'
+  resources :meals, only: :show do
+    get 'details'
+  end
 
-  get 'new_basket', to: 'baskets#create', as: 'new_basket'
-  get 'basket_total_price/:id', to: 'baskets#total_price'
-  get 'meals/:meals_id/baskets/:id', to: 'baskets#the_meal_in_the_basket?', as: 'is_the_meal_in_the_basket'
+  resources :baskets, only: :show do
+    get 'create', on: :collection
+    get 'total_price', on: :member
+    resources :orders, only: :create
+    resources :cooks, only: :show
+    resources :meals, only: [] do
+      get 'content_checking'
+    end
+  end
 
-  resources :basket_suborders, only: [:create, :update, :destroy]
+  resources :users, only: :show do
+    resources :orders, only: :index
+    patch 'update_details'
+  end
 
-  patch 'update_user_details/:id', to: 'users#update_details', as: 'update_user_details'
-  patch 'update_user_address/:id', to: 'users#update_address', as: 'update_user_address'
-  patch 'baskets/:baskets_id/update_user_details/:id', to: 'users#update_details_from_basket_show', as: 'update_details_from_basket_show'
-
-  post 'baskets/:id/orders', to: 'orders#create', as: 'new_orders'
-
-  get 'account', to: 'users#show', as: 'account'
-  get 'account/orders', to: 'orders#index', as: 'orders'
-
+  resources :basket_suborders, only: %i[create update destroy]
 end

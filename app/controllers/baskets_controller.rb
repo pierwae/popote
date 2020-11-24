@@ -8,7 +8,7 @@ class BasketsController < ApplicationController
     @order  = Order.new
   end
 
-  def create
+  def create_api
     basket = Basket.create
     render json: basket.to_json
   end

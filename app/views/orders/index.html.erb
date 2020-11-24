@@ -9,29 +9,38 @@
   <!-- DÉTAILS PART -->
 
   <div class='dashboard-card mt-0'>
-    <div class='dashboard-card-header flex-row-start-center'>
-      <h3 class='dashboard-card-title'>Détails</h3>
+    <div class='dashboard-card-header flex-row-sb-center'>
+      <h3 class='dashboard-card-title'>Jeudi 3 Mars  2020</h3>
+      <h3 class='dashboard-card-title'>Popote n°253681</h3>
     </div>
     <div class='dashboard-card-body'>
 
-      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
-        <%= f.error_notification %>
-        <div class='row'>
-          <div class='col-6'>
-            <%= f.input :first_name, label: false, placeholder: 'Prénom',
-                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-          </div>
-          <div class='col-6'>
-            <%= f.input :last_name, label: false, placeholder: 'Nom',
-                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+      <div class='flex-row-sb-center mb-2 w-100 px-3'>
+        <div>
+          <p class='mb-2'>Cuisinée par Philippe E.</p>
+          <p>À partir de 18h jusqu’à 19h30</p>
+        </div>
+        <div class='small-btn'>Contacter</div>
+      </div>
+
+      <% @order.suborders.each do |suborder| %>
+        <div class='meal-card-container my-3 p-0'>
+          <div data-id='<%= suborder.meal.id %>'  class='meal-card white-card-border flex-row-sb-center'>
+            <%= render partial: 'shared/meal_card_content', locals: {meal: suborder.meal} %>
           </div>
         </div>
-        <%= f.input :email, label: false, placeholder: 'Email',
-            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <%= f.input :phone_number, label: false, placeholder: 'Téléphone',
-            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
       <% end %>
+
+      <div class='flex-row-sb-center my-3 px-3'>
+        <div class='flex-column-sb'>
+          <h3 class='mb-2'>Total</h3>
+          <p class='grey-16'>15,70€</p>
+        </div>
+        <div class='flex-column-sb'>
+          <h3 class='mb-2'>Statut de la commande</h3>
+          <h3 class='orange-font'>En attente de validation...</h3>
+        </div>
+      </div>
 
     </div>
   </div>

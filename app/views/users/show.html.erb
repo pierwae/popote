@@ -14,7 +14,7 @@
     </div>
     <div class='dashboard-card-body'>
 
-      <%= simple_form_for @user, url: update_user_details_path(@user) do |f| %>
+      <%= simple_form_for @user, url: update_details_path(@user) do |f| %>
         <%= f.error_notification %>
         <div class='row'>
           <div class='col-6'>
@@ -44,7 +44,7 @@
     </div>
     <div class='dashboard-card-body'>
 
-      <%= simple_form_for @user, url: update_user_address_path(@user) do |f| %>
+      <%= simple_form_for @user, url: update_details_path(@user) do |f| %>
         <%= f.error_notification %>
         <%= f.input :address, label: false, placeholder: 'Adresse',
             input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>

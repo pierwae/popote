@@ -55,7 +55,7 @@
     </div>
     <div class='dashboard-card-body basket-form'>
 
-      <%= simple_form_for @order, url: new_orders_path(@basket), method: 'POST' do |f| %>
+      <%= simple_form_for @order, url: basket_orders_path(@basket), method: 'POST' do |f| %>
         <%= f.input :instructions, as: :text, label: 'Avez-vous des instructions spécifiques pour votre cuisinier ?', placeholder: 'ex : ...',
             input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
 
