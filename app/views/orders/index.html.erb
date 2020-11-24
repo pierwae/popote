@@ -24,7 +24,9 @@
       </div>
 
       <% @order.suborders.each do |suborder| %>
-        <div class='meal-card-container my-3 p-0'>
+
+        <div class='flex-row-sb-center my-3 p-0'>
+          <p class='grey-16 mr-4'><%= suborder.quantity %>x</p>
           <div data-id='<%= suborder.meal.id %>'  class='meal-card white-card-border flex-row-sb-center'>
             <%= render partial: 'shared/meal_card_content', locals: {meal: suborder.meal} %>
           </div>
@@ -36,10 +38,38 @@
           <h3 class='mb-2'>Total</h3>
           <p class='grey-16'>15,70€</p>
         </div>
-        <div class='flex-column-sb'>
-          <h3 class='mb-2'>Statut de la commande</h3>
-          <h3 class='orange-font'>En attente de validation...</h3>
-        </div>
+
+        <% if @order.customer_validation == true && @order.cook_validation == nil %>
+          <div class='flex-column-sb'>
+            <h3 class='mb-2'>Statut de la commande</h3>
+            <h3 class='orange-font'>En attente de validation...</h3>
+          </div>
+        <% end %>
+
+        <% if @order.customer_validation == true && @order.cook_validation == true %>
+          <div class='flex-column-center-center'>
+            <h3 class='mb-2'>Statut de la commande</h3>
+            <h3 class='green-font mb-2'>Validée !</h3>
+          </div>
+        <% end %>
+
+        <% if @order.cook_validation == false %>
+          <div class='flex-column-center-center'>
+            <h3 class='mb-2'>Statut de la commande</h3>
+            <h3 class='orange-font mb-2'>Déclinée</h3>
+          </div>
+        <% end %>
+
+        <% if @order.customer_validation == nil %>
+          <div class='flex-column-sb'>
+            <%= link_to user_order_accept_path(@user, @order), method: 'PATCH' do %>
+              <div class='small-btn green-bg-small-btn mb-2'>Valider</div>
+            <% end %>
+            <div class='small-btn'>Contacter</div>
+          </div>
+        <% end %>
+
+
       </div>
 
     </div>

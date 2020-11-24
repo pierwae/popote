@@ -67,6 +67,10 @@ a:link {
   color: $orange;
 }
 
+.green-font {
+  color: $green;
+}
+
 .orange-14 {
   color: $orange;
   font-size: 14px;
@@ -160,6 +164,13 @@ a:link {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.flex-column-center-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }
 
 // BACKGROUND

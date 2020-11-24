@@ -1,0 +1,2 @@
+module CookDashboard::OrdersHelper
+end

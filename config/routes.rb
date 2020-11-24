@@ -6,7 +6,11 @@ Rails.application.routes.draw do
 
   namespace :cook_dashboard do
     resources :cooks, only: :show
-    resources :orders, only: :index
+    resources :orders, only: %i[index update] do
+      patch 'accept'
+      patch 'decline'
+      patch 'cancel'
+    end
   end
 
   resources :meals, only: :show do
@@ -24,7 +28,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: :show do
-    resources :orders, only: :index
+    resources :orders, only: :index do
+      patch 'accept'
+    end
     patch 'update_details'
   end
 

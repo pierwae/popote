@@ -1,0 +1,98 @@
+<div class='orange-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Mes missions</h2>
+  </div>
+</div>
+
+<div class='dashboard-container page-lifted'>
+
+  <!-- DÉTAILS PART -->
+
+  <div class='dashboard-card mt-0'>
+    <div class='dashboard-card-header flex-row-sb-center'>
+      <h3 class='dashboard-card-title'>Jeudi 3 Mars  2020</h3>
+      <h3 class='dashboard-card-title'>Popote n°253681</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <div class='flex-row-sb-center mb-2 w-100 px-3'>
+        <div>
+          <p class='mb-2'>Commandée par Clara Dupuis</p>
+          <p>À partir de 18h jusqu’à 19h30</p>
+        </div>
+        <div class='small-btn'>Contacter</div>
+      </div>
+
+      <% @order.suborders.each do |suborder| %>
+        <div class='row my-3 p-0'>
+          <div class='col-3 pl-0 flex-column-center-center'>
+            <div class='flex-column-center-center'>
+              <div class='flex-row-sb-center mb-2'>
+                <div class='minus-btn pointer very-light-grey-14'><i class="fas fa-minus-circle"></i></div>
+                <p class='flex-row-center grey-16 suborder-quantity'><%= suborder.quantity %>x</p>
+                <div class='plus-btn pointer very-light-grey-14'><i class="fas fa-plus-circle"></i></div>
+              </div>
+              <div class='flex-column-center-center pt-2'>
+                <p class='subtotal mb-2'>Sous-total</p>
+                <p class='grey-16'>15,70€</p>
+              </div>
+            </div>
+          </div>
+          <div data-id='<%= suborder.meal.id %>'  class='col-9 meal-card white-card-border flex-row-sb-center'>
+            <%= render partial: 'shared/meal_card_content', locals: {meal: suborder.meal} %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class='flex-row-sb-center my-3 px-3'>
+
+        <div class='flex-column-sb'>
+          <h3 class='mb-2'>Total</h3>
+          <p class='grey-16'>15,70€</p>
+        </div>
+
+        <% if @order.cook_validation == nil %>
+          <div class='flex-column-sb'>
+            <%= link_to cook_dashboard_order_accept_path(@order), method: 'PATCH' do %>
+              <div class='small-btn green-bg-small-btn mb-2'>Valider</div>
+            <% end %>
+            <%= link_to cook_dashboard_order_decline_path(@order), method: 'PATCH' do %>
+              <div class='small-btn orange-border-small-btn'>Décliner</div>
+            <% end %>
+          </div>
+        <% end %>
+
+
+        <% if @order.customer_validation == true && @order.cook_validation == true %>
+          <div class='flex-column-center-center'>
+            <h3 class='green-font mb-2'>Validée !</h3>
+            <%= link_to cook_dashboard_order_cancel_path(@order), method: 'PATCH' do %>
+              <div class='small-btn'>Annuler</div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if @order.cook_validation == false %>
+          <div class='flex-column-center-center'>
+            <h3 class='orange-font mb-2'>Déclinée</h3>
+            <%= link_to cook_dashboard_order_cancel_path(@order), method: 'PATCH' do %>
+              <div class='small-btn'>Annuler</div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if @order.customer_validation == nil && @order.cook_validation == true %>
+          <div class='flex-column-sb'>
+            <h3 class='mb-2'>En attente de validation...</h3>
+            <%= link_to cook_dashboard_order_decline_path(@order), method: 'PATCH' do %>
+              <div class='small-btn orange-border-small-btn'>Décliner</div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
