@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_25_153729) do
+ActiveRecord::Schema.define(version: 2020_11_25_192919) do
 
   create_table "basket_suborders", force: :cascade do |t|
     t.integer "meal_id", null: false
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_11_25_153729) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "information"
     t.index ["category_id"], name: "index_meals_on_category_id"
   end
 

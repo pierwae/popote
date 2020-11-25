@@ -150,6 +150,13 @@ a:link {
   align-items: center;
 }
 
+.flex-row-end-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .flex-column-sb {
   display: flex;
   flex-direction: column;
