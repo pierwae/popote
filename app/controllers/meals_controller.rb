@@ -13,4 +13,8 @@ class MealsController < ApplicationController
       render json: 0.to_json
     end
   end
+
+  def update
+    raise
+  end
 end

@@ -1,0 +1,83 @@
+<div class='yellow-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Mes recettes</h2>
+  </div>
+</div>
+
+<div class='dashboard-container page-lifted'>
+
+  <!-- CATEGORY CARD -->
+
+  <div class='category-card flex-row-sb-center'>
+    <h3 class='dashboard-card-title white-font'>Super cool collection</h3>
+    <div class='white-font flex-row-sb-center'>
+      <div class='pointer'><i class="fas fa-pen"></i></div>
+      <div class='ml-3 pointer'><i class="fas fa-trash"></i></div>
+    </div>
+  </div>
+
+  <!-- MEAL CARD -->
+
+  <div class='dashboard-card mt-0'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Hamburger</h3>
+    </div>
+    <div class='dashboard-card-body basket-form'>
+
+
+
+
+      <%= simple_form_for @meal, url: meal_path(@meal), method: 'PATCH' do |f| %>
+        <%= f.error_notification %>
+        <h3 class='mb-3'>Nom de la recette</h3>
+        <%= f.input :name, label: false, placeholder: 'ex : Hamburger',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
+
+        <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
+
+        <h3 class='mb-3'>Ingrédients</h3>
+
+        <%= simple_form_for :ingredients_list, url: meal_path(@meal), method: 'PATCH' do |f| %>
+          <%= f.error_notification %>
+          <div class='wrapper-ingredients'>
+            <% i = 0 %>
+            <% @ingredients.each do |ingredient| %>
+              <% i += 1 %>
+
+              <div class='wrapper-item-ingredient row'>
+                <div class='pb-3 px-0 col-2 grey-16 flex-row-center-center'>
+                  <p><%= i %>.</p>
+                </div>
+                <div class='p-0 col-8'>
+                  <%= f.input ('ingredient' + i.to_s).to_sym, label: false, placeholder: 'ex : Tomate',
+                      input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: ingredient.name } %>
+                </div>
+                <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+
+            <% end %>
+          </div>
+          <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+        <% end %>
+
+        <p class='grey-14 pointer underline mb-3'>Ajouter un ingrédient</p>
+
+        <!-- FIN DE LA PARTIE INGRÉDIENTS -->
+
+        <h3 class='mb-3'>Prix par portion en €</h3>
+        <%= f.input :price, label: false, placeholder: 'ex: 10,00€',
+            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <h3 class='mb-3'>Collection</h3>
+        <%= f.association :category, collection: Category.where(cook: @cook), label: false, placeholder: 'Téléphone',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: @meal.category.id } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+      <% end %>
+
+    </div>
+  </div>
+
+
+</div>
+
