@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_203353) do
+ActiveRecord::Schema.define(version: 2020_11_24_182545) do
 
   create_table "basket_suborders", force: :cascade do |t|
     t.integer "meal_id", null: false
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 2020_11_23_203353) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "instructions"
     t.boolean "cgu_validation"
+    t.boolean "customer_validation"
+    t.boolean "cook_validation"
     t.index ["cook_id"], name: "index_orders_on_cook_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end

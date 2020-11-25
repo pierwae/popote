@@ -2,7 +2,6 @@ class OrdersController < ApplicationController
   def index
     @user = current_user
     @order = Order.last
-
   end
 
   def create
@@ -13,15 +12,25 @@ class OrdersController < ApplicationController
                       customer_id: current_user.id,
                       instructions: order_details[:instructions],
                       cgu_validation: order_details[:cgu_validation],
+                      customer_validation: true,
                       status: 'En attente de validation...')
 
     redirect_to homepage_path unless order.save
 
-    basket.meals.each do |meal|
-      suborder = Suborder.new(meal: meal, order: order)
+    basket.basket_suborders.each do |basket_suborder|
+      suborder = Suborder.new(meal: basket_suborder.meal,
+                              quantity: basket_suborder.quantity,
+                              order: order)
       redirect_to homepage_path unless suborder.save
     end
 
+    redirect_to user_orders_path(current_user)
+  end
+
+  def accept
+    @order = Order.find(params[:order_id])
+    @order.customer_validation = true
+    @order.save
     redirect_to user_orders_path(current_user)
   end
 end
