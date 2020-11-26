@@ -11,9 +11,10 @@ Rails.application.routes.draw do
       patch 'decline'
       patch 'cancel'
     end
+    resources :categories, only: :index
   end
 
-  resources :meals, only: :show do
+  resources :meals, only: [:update] do
     get 'details'
   end
 

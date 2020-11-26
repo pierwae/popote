@@ -17,7 +17,8 @@
     <% if (params[:controller] == 'users' && params[:action] == 'show') ||
           (params[:controller] == 'baskets' && params[:action] == 'show') ||
           (params[:controller] == 'orders' && params[:action] == 'index') ||
-          (params[:controller] == 'cook_dashboard/orders' && params[:action] == 'index') %>
+          (params[:controller] == 'cook_dashboard/orders' && params[:action] == 'index') ||
+          (params[:controller] == 'cook_dashboard/categories' && params[:action] == 'index') %>
       class='beige-bg'
     <% end %>
   >
