@@ -26,6 +26,7 @@ class MealsController < ApplicationController
     @ingredients = params.require(:meal).require(:ingredients).permit!
     @meal.ingredients.delete_all
     @ingredients.values.each do |value|
+      Ingrédients.new(meal: @meal, rank: )
       puts value
     end
 
