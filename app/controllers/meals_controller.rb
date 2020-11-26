@@ -15,6 +15,20 @@ class MealsController < ApplicationController
   end
 
   def update
+    @meal = Meal.find(params[:id])
+    meal_details = params.require(:meal).permit(:name, :information, :price, :category_id)
+    @meal.update(name: meal_details[:name],
+                 information: meal_details[:information],
+                 price: meal_details[:price].gsub(',', '.').to_f,
+                 category_id: meal_details[:category_id])
+    @meal.save
+
+    @ingredients = params.require(:meal).require(:ingredients).permit!
+    @meal.ingredients.delete_all
+    @ingredients.values.each do |value|
+      puts value
+    end
+
     raise
   end
 end

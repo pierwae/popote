@@ -1,10 +1,25 @@
+const removeLastRankingItemToLists = (items) => {
+  items.querySelectorAll('.ingredient-qtt').forEach((list) => {
+    list.children[list.children.length - 1].remove();
+  });
+}
 
-const deleteIngredientItem = () => {
-  document.querySelectorAll('.wrapper-item-ingredient').forEach((item) => {
-    const cross = item.querySelector('.delete-ingredient-item');
-    cross.addEventListener('click', (event) => {
-      item.remove();
-    })
+deleteIngredientItem = (cross) => {
+  cross.addEventListener('click', (event) => {
+    const deletedItem = event.srcElement.parentElement.parentElement.parentElement;
+    const items = deletedItem.parentElement;
+    deletedItem.remove();
+    removeLastRankingItemToLists(items);
+  })
+}
+
+const targetCrossInOrderToDeleteItem = () => {
+  document.querySelectorAll('.meal-dashboard-card').forEach((mealCard) => {
+    const items = mealCard.querySelectorAll('.wrapper-item-ingredient');
+    items.forEach((item) => {
+      const cross = item.querySelector('.delete-ingredient-item');
+      deleteIngredientItem(cross);
+    });
   });
 }
 
@@ -44,28 +59,34 @@ const addNewRankingItemToLists = (items, ingredientsCount) => {
     const htmlContent = `<option value='${ingredientsCount + 1}.'>${ingredientsCount + 1}.</option>`;
     list.insertAdjacentHTML("beforeend", htmlContent);
   });
-  console.log('je veux dormir');
 }
 
-const addIngredientItem = () => {
+
+const addNewIngredientItem = (value, ingredientsCount, items) => {
+  const htmlContent = buildHtmlContent(value, ingredientsCount);
+  addNewRankingItemToLists(items, ingredientsCount);
+  items.insertAdjacentHTML("beforeend", htmlContent);
+  const item = items.children[items.children.length - 1];
+  const cross = item.querySelector('.delete-ingredient-item');
+  deleteIngredientItem(cross);
+}
+
+const initIngredientAdding = () => {
   document.querySelectorAll('.meal-dashboard-card').forEach((mealCard) => {
     mealCard.querySelector('.add-ingredient-item').addEventListener('click', (event) => {
       const items = mealCard.querySelector('.wrapper-ingredients');
       const ingredientsCount = items.children.length;
-      const lastItem = items.children[ingredientsCount - 1]
-      const value = parseInt(lastItem.querySelector('.ingredient-qtt').value, 10);
-      const htmlContent = buildHtmlContent(value, ingredientsCount);
-      addNewRankingItemToLists(items, ingredientsCount);
-      items.insertAdjacentHTML("beforeend", htmlContent);
+      if (ingredientsCount == 0) {
+        const value = 1;
+        addNewIngredientItem(value, ingredientsCount, items);
+      } else {
+        const lastItem = items.children[ingredientsCount - 1]
+        const value = parseInt(lastItem.querySelector('.ingredient-qtt').value, 10);
+        addNewIngredientItem(value, ingredientsCount, items);
+      }
     })
   });
 }
 
-deleteIngredientItem()
-addIngredientItem()
-
-
-
-
-
-
+targetCrossInOrderToDeleteItem()
+initIngredientAdding()
