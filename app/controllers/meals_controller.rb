@@ -16,20 +16,30 @@ class MealsController < ApplicationController
 
   def update
     @meal = Meal.find(params[:id])
-    meal_details = params.require(:meal).permit(:name, :information, :price, :category_id)
+    meal_details = params.require(:meal).permit(:name, :information, :description, :price, :category_id)
     @meal.update(name: meal_details[:name],
                  information: meal_details[:information],
+                 description: meal_details[:description],
                  price: meal_details[:price].gsub(',', '.').to_f,
                  category_id: meal_details[:category_id])
     @meal.save
 
-    @ingredients = params.require(:meal).require(:ingredients).permit!
-    @meal.ingredients.delete_all
-    @ingredients.values.each do |value|
-      Ingrédients.new(meal: @meal, rank: )
-      puts value
+    @meal.ingredients.each do |ingredient|
+      ingredient.destroy
     end
 
-    raise
+    if params[:meal].keys.include?('ingredients')
+      @ingredients = params.require(:meal).require(:ingredients).permit!
+      @ingredients = @ingredients.to_h.sort_by { |_, value| value['rank'] }
+      @ingredients.each_with_index do |item, index|
+        name = item[1]['name']
+        unless name.empty?
+          ingredient = Ingredient.new(meal: @meal, rank: index + 1, name: name)
+          ingredient.save
+        end
+      end
+    end
+    redirect_back(fallback_location: homepage_path)
   end
+
 end

@@ -42,6 +42,7 @@ const displayMealPopUp = () => {
   document.querySelectorAll('.meal-card').forEach((element) => {
     element.addEventListener('click', (event) => {
       const id = event.currentTarget.dataset.id;
+      console.log(id);
       getMealDetails(id);
       document.getElementById('meal-pop-up').classList.remove("hidden");
     });

@@ -1,33 +1,33 @@
 const removeLastRankingItemToLists = (items) => {
-  items.querySelectorAll('.ingredient-qtt').forEach((list) => {
-    list.children[list.children.length - 1].remove();
+  items.querySelectorAll('.ingredient-qtt').forEach((rankList) => {
+    rankList.children[rankList.children.length - 1].remove();
   });
 }
 
-deleteIngredientItem = (cross) => {
-  cross.addEventListener('click', (event) => {
-    const deletedItem = event.srcElement.parentElement.parentElement.parentElement;
-    const items = deletedItem.parentElement;
-    deletedItem.remove();
+deleteIngredientItem = (item) => {
+  const crossBtn = item.querySelector('.delete-ingredient-item');
+  crossBtn.addEventListener('click', (event) => {
+    const items = item.parentElement;
+    item.remove();
     removeLastRankingItemToLists(items);
   })
 }
 
-const targetCrossInOrderToDeleteItem = () => {
+// FONCTION DE DÉPART : SUPPRESSION D'UN ITEM APRÈS CLICK SUR LA CROIX ASSOCIÉE
+const targetEachItem = () => {
   document.querySelectorAll('.meal-dashboard-card').forEach((mealCard) => {
     const items = mealCard.querySelectorAll('.wrapper-item-ingredient');
     items.forEach((item) => {
-      const cross = item.querySelector('.delete-ingredient-item');
-      deleteIngredientItem(cross);
+      deleteIngredientItem(item);
     });
   });
 }
 
-const buildHtmlContent = (value, ingredientsCount) => {
+const buildHtmlContent = (ingredientsCount, indexNewItem) => {
   const htmlContentBegin = `<div class='wrapper-item-ingredient row'>
                               <div class='col-2 p-0 grey-16  flex-row-center-center'>
                                 <div class='form-group select required meal_ingredients_rank'>
-                                  <select class='form-control select required p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center' value='${value + 1}' name='meal[ingredients][${value}][rank]' id='meal_ingredients_${value}_rank'>`;
+                                  <select class='form-control select required p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center' value='' name='meal[ingredients][${indexNewItem}][rank]' id='meal_ingredients_${indexNewItem}_rank'>`;
 
   let htmlContentMiddle = '';
   for (let i = 1; i < ingredientsCount + 1; i++) {
@@ -40,7 +40,7 @@ const buildHtmlContent = (value, ingredientsCount) => {
                             </div>
                             <div class='p-0 col-8'>
                               <div class='form-group string required meal_ingredients_name'>
-                                <input class='form-control string required details-form-item static-form-item flex-row-start-center' value='' placeholder='ex : Piment' type='text' name='meal[ingredients][${value}][name]' id='meal_ingredients_${value}_name'>
+                                <input class='form-control string required details-form-item static-form-item flex-row-start-center' value='' placeholder='ex : Piment' type='text' name='meal[ingredients][${indexNewItem}][name]' id='meal_ingredients_${indexNewItem}_name'>
                               </div>
                             </div>
                             <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
@@ -62,31 +62,28 @@ const addNewRankingItemToLists = (items, ingredientsCount) => {
 }
 
 
-const addNewIngredientItem = (value, ingredientsCount, items) => {
-  const htmlContent = buildHtmlContent(value, ingredientsCount);
+const addNewIngredientItem = (ingredientsCount, items, indexNewItem) => {
+  const htmlContent = buildHtmlContent(ingredientsCount, indexNewItem);
   addNewRankingItemToLists(items, ingredientsCount);
   items.insertAdjacentHTML("beforeend", htmlContent);
-  const item = items.children[items.children.length - 1];
-  const cross = item.querySelector('.delete-ingredient-item');
-  deleteIngredientItem(cross);
+  const lastItem = items.children[items.children.length - 1];
+  deleteIngredientItem(lastItem);
 }
 
+// FONCTION DE DÉPART : CRÉATION D'UN NOUVEL ITEM APRÈS CLICK SUR 'Ajouter un ingrédient'
 const initIngredientAdding = () => {
   document.querySelectorAll('.meal-dashboard-card').forEach((mealCard) => {
+    let indexNewItem = mealCard.querySelector('.wrapper-ingredients').children.length;
     mealCard.querySelector('.add-ingredient-item').addEventListener('click', (event) => {
+      indexNewItem += 1;
       const items = mealCard.querySelector('.wrapper-ingredients');
       const ingredientsCount = items.children.length;
-      if (ingredientsCount == 0) {
-        const value = 1;
-        addNewIngredientItem(value, ingredientsCount, items);
-      } else {
-        const lastItem = items.children[ingredientsCount - 1]
-        const value = parseInt(lastItem.querySelector('.ingredient-qtt').value, 10);
-        addNewIngredientItem(value, ingredientsCount, items);
-      }
+      addNewIngredientItem(ingredientsCount, items, indexNewItem);
     })
   });
 }
 
-targetCrossInOrderToDeleteItem()
+targetEachItem()
 initIngredientAdding()
+// export { targetEachItem };
+// export { initIngredientAdding };

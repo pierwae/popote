@@ -8,88 +8,95 @@
 
   <!-- CATEGORY CARD -->
 
-  <div class='category-card flex-row-sb-center'>
-    <h3 class='dashboard-card-title white-font'>Super cool collection</h3>
-    <div class='white-font flex-row-sb-center'>
-      <div class='pointer'><i class="fas fa-pen"></i></div>
-      <div class='ml-3 pointer'><i class="fas fa-trash"></i></div>
+  <% @categories.each do |category| %>
+
+    <div class='category-card flex-row-sb-center'>
+      <h3 class='dashboard-card-title white-font'><%= category.name %></h3>
+      <div class='white-font flex-row-sb-center'>
+        <div class='pointer'><i class="fas fa-pen"></i></div>
+        <div class='ml-3 pointer'><i class="fas fa-trash"></i></div>
+      </div>
     </div>
-  </div>
 
-  <!-- MEAL CARD -->
+    <!-- MEAL CARD -->
 
-  <div class='meal-dashboard-card dashboard-card mt-0'>
-    <div class='dashboard-card-header flex-row-start-center'>
-      <h3 class='dashboard-card-title'>Hamburger</h3>
-    </div>
-    <div class='dashboard-card-body basket-form'>
+    <% category.meals.each do |meal| %>
+
+      <div class='meal-dashboard-card dashboard-card mt-0'>
+        <div class='dashboard-card-header flex-row-sb-center'>
+          <h3 class='dashboard-card-title'><%= meal.name %></h3>
+          <div class='chevron-down pointer'><i class="fas fa-chevron-down"></i></div>
+          <div class='chevron-up pointer hidden'><i class="fas fa-chevron-up"></i></div>
+        </div>
+        <div class='dashboard-card-body basket-form hidden'>
+
+          <%= simple_form_for meal, url: meal_path(meal), method: 'PATCH' do |f| %>
+            <%= f.error_notification %>
+            <h3 class='mb-3'>Nom de la recette</h3>
+            <%= f.input :name, label: false, placeholder: 'ex : Hamburger',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+
+            <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
+
+            <h3 class='mb-3'>Ingrédients</h3>
+
+            <%= f.simple_fields_for :ingredients do |h| %>
+
+              <div class='wrapper-ingredients'>
+                <% i = 0 %>
+                <% meal.ingredients.each do |ingredient| %>
 
 
+                  <% ingredient_rank = [] %>
+                  <% (1..meal.ingredients.count).each do |rank| %>
+                    <% ingredient_rank << rank.to_s + '.' %>
+                  <% end %>
 
+                  <%= h.simple_fields_for i.to_s.to_sym do |k|  %>
+                  <% i += 1 %>
+                  <div class='wrapper-item-ingredient row'>
+                    <div class='col-2 p-0 grey-16  flex-row-center-center'>
+                      <%= k.input :rank, collection: ingredient_rank, label: false, selected: ingredient_rank[i-1], include_blank: false,
+                          input_html: { class: 'p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center', value: i } %>
+                    </div>
+                    <div class='p-0 col-8'>
+                      <%= k.input :name, label: false, placeholder: 'ex : Tomate',
+                          input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: ingredient.name } %>
+                    </div>
+                    <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
+                      <div class='delete-ingredient-item'><i class="fas fa-times"></i></div>
+                    </div>
+                  </div>
 
-      <%= simple_form_for @meal, url: meal_path(@meal), method: 'PATCH' do |f| %>
-        <%= f.error_notification %>
-        <h3 class='mb-3'>Nom de la recette</h3>
-        <%= f.input :name, label: false, placeholder: 'ex : Hamburger',
-            input_html: { class: 'details-form-item static-form-item flex-row-start-center inactive-input' } %>
-
-        <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
-
-        <h3 class='mb-3'>Ingrédients</h3>
-
-        <%= f.simple_fields_for :ingredients do |h| %>
-
-          <div class='wrapper-ingredients'>
-            <% i = 0 %>
-            <% @ingredients.each do |ingredient| %>
-
-
-              <% ingredient_rank = [] %>
-              <% (1..@meal.ingredients.count).each do |rank| %>
-                <% ingredient_rank << rank.to_s + '.' %>
-              <% end %>
-
-              <%= h.simple_fields_for i.to_s.to_sym do |k|  %>
-              <% i += 1 %>
-              <div class='wrapper-item-ingredient row'>
-                <div class='col-2 p-0 grey-16  flex-row-center-center'>
-                  <%= k.input :rank, collection: ingredient_rank, label: false, selected: ingredient_rank[i-1], include_blank: false,
-                      input_html: { class: 'p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center', value: i } %>
-                </div>
-                <div class='p-0 col-8'>
-                  <%= k.input :name, label: false, placeholder: 'ex : Tomate',
-                      input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: ingredient.name } %>
-                </div>
-                <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
-                  <div class='delete-ingredient-item'><i class="fas fa-times"></i></div>
-                </div>
+                <% end %>
+                <% end %>
               </div>
-
             <% end %>
-            <% end %>
-          </div>
-        <% end %>
 
-        <p class='add-ingredient-item orange-14 pointer underline mb-3'>Ajouter un ingrédient</p>
+            <p class='add-ingredient-item orange-14 pointer underline mb-3'>Ajouter un ingrédient</p>
 
-        <!-- FIN DE LA PARTIE INGRÉDIENTS -->
+            <!-- FIN DE LA PARTIE INGRÉDIENTS -->
 
-        <h3 class='mb-3'>Informations supplémentaires</h3>
-        <%= f.input :information, as: :text, label: false, placeholder: 'ex : ...',
-            input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <h3 class='mb-3'>Prix par portion en €</h3>
-        <%= f.input :price, label: false, placeholder: 'ex: 10,00€',
-            input_html: { autocomplete: 'email', class: 'details-form-item static-form-item flex-row-start-center' } %>
-        <h3 class='mb-3'>Collection</h3>
-        <%= f.association :category, collection: Category.where(cook: @cook), label: false, placeholder: 'Téléphone', include_blank: false,
-            input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: @meal.category.id } %>
-        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
-      <% end %>
+            <h3 class='mb-3'>Description</h3>
+            <%= f.input :description, as: :text, label: false, placeholder: 'ex : ...',
+                input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+            <h3 class='mb-3'>Informations supplémentaires</h3>
+            <%= f.input :information, as: :text, label: false, placeholder: 'ex : ...',
+                input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+            <h3 class='mb-3'>Prix par portion en €</h3>
+            <%= f.input :price, label: false, placeholder: 'ex: 10,00€',
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+            <h3 class='mb-3'>Collection</h3>
+            <%= f.association :category, collection: @categories, label: false, placeholder: 'Téléphone', include_blank: false,
+                input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: meal.category.id } %>
+            <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+          <% end %>
 
-    </div>
-  </div>
+        </div>
+      </div>
+    <% end %>
 
-
+  <% end %>
 </div>
 
-<%= javascript_pack_tag 'ingredientsRanking'%>
+<%= javascript_pack_tag 'ingredientsRanking', 'categoryIndex/index'%>
