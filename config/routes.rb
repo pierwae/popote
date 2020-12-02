@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :categories, except: %i[show edit]
   end
 
-  resources :meals, only: %i[update new create] do
+  resources :meals, only: %i[update new create destroy] do
     get 'details'
   end
 
