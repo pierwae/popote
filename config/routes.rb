@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       patch 'decline'
       patch 'cancel'
     end
-    resources :categories, only: :index
+    resources :categories, except: %i[show edit]
   end
 
   resources :meals, only: [:update] do

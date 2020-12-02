@@ -1,0 +1,58 @@
+.dashboard-container {
+  max-width: 545px;
+  margin: 0 auto;
+}
+
+.dashboard-card {
+  width: 100%;
+  margin: 0 0 30px 0;
+  background-color: $white;
+  // border: 1px solid $very-light-grey;
+}
+
+.meal-dashboard-card {
+  width: 100%;
+
+  h2 {
+    font-size: 22px;
+    padding-top: 4px;
+  }
+}
+
+.no-border-top {
+  border-top: none !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $very-light-grey;
+}
+
+.meal-dashboard-card-header {
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid $very-light-grey;
+  padding: 10px 40px;
+}
+
+.dashboard-card-header {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid $very-light-grey;
+  padding: 10px 20px;
+}
+
+.category-card {  // .orange-header
+  background-color: $orange !important;
+  border-bottom: none !important;
+}
+
+.dashboard-card-title {
+  font-size: 22px;
+  padding-top: 4px;
+}
+
+.dashboard-card-body {
+  width: 100%;
+  height: 100%;
+  padding: 30px 40px;
+}
