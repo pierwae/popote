@@ -1,0 +1,61 @@
+<%= simple_form_for meal, url: url, method: method do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :name, label: 'Nom de la recette', placeholder: 'ex : Hamburger',
+      input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+
+  <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
+
+  <label>Ingrédients</label>
+
+  <div class='ingredients-area'>
+
+    <%= f.simple_fields_for :ingredients do |h| %>
+
+      <div class='wrapper-ingredients'>
+        <% i = 0 %>
+        <% meal.ingredients.each do |ingredient| %>
+
+
+          <% ingredient_rank = [] %>
+          <% (1..meal.ingredients.count).each do |rank| %>
+            <% ingredient_rank << rank.to_s + '.' %>
+          <% end %>
+
+          <%= h.simple_fields_for i.to_s.to_sym do |k|  %>
+          <% i += 1 %>
+          <div class='wrapper-item-ingredient row'>
+            <div class='col-2 p-0 grey-16  flex-row-center-center'>
+              <%= k.input :rank, collection: ingredient_rank, label: false, selected: ingredient_rank[i-1], include_blank: false,
+                  input_html: { class: 'p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center', value: i } %>
+            </div>
+            <div class='p-0 col-8'>
+              <%= k.input :name, label: false, placeholder: 'ex : Tomate',
+                  input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: ingredient.name } %>
+            </div>
+            <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
+              <div class='delete-ingredient-item'><i class="fas fa-times"></i></div>
+            </div>
+          </div>
+
+        <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <p class='add-ingredient-item orange-14 pointer underline mb-3'>Ajouter un ingrédient</p>
+
+  </div>
+
+
+  <!-- FIN DE LA PARTIE INGRÉDIENTS -->
+
+  <%= f.input :description, as: :text, label: 'Description', placeholder: 'ex : ...',
+      input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.input :information, as: :text, label: 'Informations supplémentaires', placeholder: 'ex : ...',
+      input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.input :price, label: 'Prix par portion en €', placeholder: 'ex: 10,00€',
+      input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.association :category, collection: categories, label: 'Collection', placeholder: 'Téléphone', include_blank: false,
+      input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: button, data: { disable_with: false } %>
+<% end %>

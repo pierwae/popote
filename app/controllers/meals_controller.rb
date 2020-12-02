@@ -42,4 +42,13 @@ class MealsController < ApplicationController
     redirect_back(fallback_location: homepage_path)
   end
 
+  def new
+    @meal = Meal.new
+    @categories = current_user.cook.categories.order(created_at: :desc)
+  end
+
+  def create
+    raise
+  end
+
 end

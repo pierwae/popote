@@ -11,7 +11,13 @@
 }
 
 .banner-title {
-  padding-top: 90px;
+  height: 100%;
+  padding-bottom: 55px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
 
   h2 {
     color: $white;
