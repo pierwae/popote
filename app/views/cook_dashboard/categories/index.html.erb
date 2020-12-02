@@ -1,6 +1,22 @@
 <div class='yellow-banner'>
   <div class='dashboard-container banner-title'>
-    <h2>Mes recettes</h2>
+    <div class='w-100 flex-row-sb-end'>
+      <h2>Mes recettes</h2>
+      <div class='flex-column-sb-end mb-1'>
+        <%= link_to new_meal_path do %>
+          <div class='flex-row-start-center pointer white-font'>
+            <i class="far fa-plus-square"></i>
+            <p class='add-element-link'>Ajouter une nouvelle recette</p>
+          </div>
+        <% end %>
+        <%= link_to new_cook_dashboard_category_path do %>
+          <div class='flex-row-start-center pointer white-font mt-2'>
+            <i class="far fa-plus-square"></i>
+            <p class='add-element-link'>Ajouter une nouvelle catégorie</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -14,20 +30,32 @@
 
       <div class='meal-dashboard-card'>
         <div class='dashboard-card-header category-card flex-row-sb-center'>
-          <h3 class='dashboard-card-title white-font'><%= category.name %></h3>
+          <h3 class='dashboard-card-title white-font'><%= category.rank %>. <%= category.name %></h3>
           <div class='white-font flex-row-sb-center'>
             <div class='display-card-body pointer'><i class="fas fa-pen"></i></div>
             <div class='hide-card-body pointer hidden'><i class="fas fa-chevron-up"></i></div>
           </div>
         </div>
-        <div class='dashboard-card-body border-bottom hidden basket-form'>
+        <div class='dashboard-card-body hidden basket-form <%= 'border-bottom' unless category.meals.empty? %>'>
           <div class=''>
-            <%= simple_form_for category, url: '#' do |f| %>
+            <%= simple_form_for category, url: cook_dashboard_category_path(category), method: 'PATCH' do |f| %>
               <%= f.error_notification %>
               <%= f.input :name, label: 'Nom de la catégorie', placeholder: 'ex : ...',
                   input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+              <%= f.input :rank, collection: @cook.category_ranks_array(params[:action]),
+                                 label: 'Rang',
+                                 selected: category.rank.nil? ? @cook.category_ranks_array(params[:action]).last : @cook.category_ranks_array(params[:action])[category.rank-1],
+                                 include_blank: false,
+                                 input_html: { class: 'details-form-item static-form-item flex-row-start-center',
+                                 value: category.rank } %>
               <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
-              <p class='orange-14 pointer underline mt-3'>Supprimer la catégorie</p>
+              <% if category.meals.empty? %>
+                <%= link_to cook_dashboard_category_path(category), method: 'DELETE' do %>
+                  <p class='orange-14 pointer underline mt-3'>Supprimer la catégorie</p>
+                <% end %>
+              <% else %>
+                <p class='orange-14 mt-3'>Vous ne pouvez supprimer une catégorie seulement si elle est vide.</p>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -35,7 +63,7 @@
 
       <!-- MEAL CARD -->
 
-      <% category.meals.each do |meal| %>
+      <% category.meals.where(deleted: [nil, false]).each do |meal| %>
 
         <div class='meal-dashboard-card'>
           <div class='meal-dashboard-card-header flex-row-sb-center <%= 'no-border-top' if meal.id == category.meals.first.id %>'>
@@ -45,69 +73,15 @@
           </div>
 
           <div class='pt-0 dashboard-card-body basket-form hidden'>
-            <%= simple_form_for meal, url: meal_path(meal), method: 'PATCH' do |f| %>
-              <%= f.error_notification %>
-              <%= f.input :name, label: 'Nom de la recette', placeholder: 'ex : Hamburger',
-                  input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-
-              <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
-
-              <label>Ingrédients</label>
-
-              <div class='ingredients-area'>
-
-                <%= f.simple_fields_for :ingredients do |h| %>
-
-                  <div class='wrapper-ingredients'>
-                    <% i = 0 %>
-                    <% meal.ingredients.each do |ingredient| %>
-
-
-                      <% ingredient_rank = [] %>
-                      <% (1..meal.ingredients.count).each do |rank| %>
-                        <% ingredient_rank << rank.to_s + '.' %>
-                      <% end %>
-
-                      <%= h.simple_fields_for i.to_s.to_sym do |k|  %>
-                      <% i += 1 %>
-                      <div class='wrapper-item-ingredient row'>
-                        <div class='col-2 p-0 grey-16  flex-row-center-center'>
-                          <%= k.input :rank, collection: ingredient_rank, label: false, selected: ingredient_rank[i-1], include_blank: false,
-                              input_html: { class: 'p-0 details-form-item ingredient-qtt grey-14 flex-row-end-center', value: i } %>
-                        </div>
-                        <div class='p-0 col-8'>
-                          <%= k.input :name, label: false, placeholder: 'ex : Tomate',
-                              input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: ingredient.name } %>
-                        </div>
-                        <div class='pb-3 px-0 col-2 grey-16 pointer flex-row-center-center'>
-                          <div class='delete-ingredient-item'><i class="fas fa-times"></i></div>
-                        </div>
-                      </div>
-
-                    <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
-
-                <p class='add-ingredient-item orange-14 pointer underline mb-3'>Ajouter un ingrédient</p>
-
-              </div>
-
-
-              <!-- FIN DE LA PARTIE INGRÉDIENTS -->
-
-              <%= f.input :description, as: :text, label: 'Description', placeholder: 'ex : ...',
-                  input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
-              <%= f.input :information, as: :text, label: 'Informations supplémentaires', placeholder: 'ex : ...',
-                  input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
-              <%= f.input :price, label: 'Prix par portion en €', placeholder: 'ex: 10,00€',
-                  input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-              <%= f.association :category, collection: @categories, label: 'Collection', placeholder: 'Téléphone', include_blank: false,
-                  input_html: { class: 'details-form-item static-form-item flex-row-start-center', value: meal.category.id } %>
-              <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+            <!-- MEAL FORM -->
+            <%= render partial: 'shared/meal_form', locals: {meal: meal,
+                                                             categories: @categories,
+                                                             url: meal_path(meal),
+                                                             method: 'PATCH',
+                                                             button: 'Enregistrer les modifications'} %>
+            <%= link_to meal_path(meal), method: 'DELETE' do %>
               <p class='orange-14 pointer underline mt-3'>Supprimer la recette</p>
             <% end %>
-
           </div>
         </div>
       <% end %>

@@ -7,4 +7,12 @@ class Meal < ApplicationRecord
   def formatted_price
     ('%.2f' % price).gsub('.', ',')
   end
+
+  def ingredient_ranks_array
+    ingredient_ranks = []
+    (1..ingredients.count).each do |rank|
+      ingredient_ranks << rank.to_s + '.'
+    end
+    ingredient_ranks
+  end
 end

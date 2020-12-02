@@ -18,7 +18,9 @@
           (params[:controller] == 'baskets' && params[:action] == 'show') ||
           (params[:controller] == 'orders' && params[:action] == 'index') ||
           (params[:controller] == 'cook_dashboard/orders' && params[:action] == 'index') ||
-          (params[:controller] == 'cook_dashboard/categories' && params[:action] == 'index') %>
+          (params[:controller] == 'cook_dashboard/categories' && params[:action] == 'index') ||
+          (params[:controller] == 'cook_dashboard/categories' && params[:action] == 'new') ||
+          (params[:controller] == 'meals' && params[:action] == 'new') %>
       class='beige-bg'
     <% end %>
   >
