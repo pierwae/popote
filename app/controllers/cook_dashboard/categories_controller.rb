@@ -6,4 +6,6 @@ class CookDashboard::CategoriesController < ApplicationController
     # @meal = Cook.last.categories.last.meals.last
     # @ingredients = @meal.ingredients
   end
+
+
 end

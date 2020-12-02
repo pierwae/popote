@@ -72,7 +72,7 @@ const addNewIngredientItem = (ingredientsCount, items, indexNewItem) => {
 
 // FONCTION DE DÉPART : CRÉATION D'UN NOUVEL ITEM APRÈS CLICK SUR 'Ajouter un ingrédient'
 const initIngredientAdding = () => {
-  document.querySelectorAll('.meal-dashboard-card').forEach((mealCard) => {
+  document.querySelectorAll('.ingredients-area').forEach((mealCard) => {
     let indexNewItem = mealCard.querySelector('.wrapper-ingredients').children.length;
     mealCard.querySelector('.add-ingredient-item').addEventListener('click', (event) => {
       indexNewItem += 1;
