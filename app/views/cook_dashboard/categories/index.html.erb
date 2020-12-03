@@ -38,25 +38,19 @@
         </div>
         <div class='dashboard-card-body hidden basket-form <%= 'border-bottom' unless category.meals.empty? %>'>
           <div class=''>
-            <%= simple_form_for category, url: cook_dashboard_category_path(category), method: 'PATCH' do |f| %>
-              <%= f.error_notification %>
-              <%= f.input :name, label: 'Nom de la catégorie', placeholder: 'ex : ...',
-                  input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-              <%= f.input :rank, collection: @cook.category_ranks_array(params[:action]),
-                                 label: 'Rang',
-                                 selected: category.rank.nil? ? @cook.category_ranks_array(params[:action]).last : @cook.category_ranks_array(params[:action])[category.rank-1],
-                                 include_blank: false,
-                                 input_html: { class: 'details-form-item static-form-item flex-row-start-center',
-                                 value: category.rank } %>
-              <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: 'Enregistrer les modifications', data: { disable_with: false } %>
-              <% if category.meals.empty? %>
-                <%= link_to cook_dashboard_category_path(category), method: 'DELETE' do %>
-                  <p class='orange-14 pointer underline mt-3'>Supprimer la catégorie</p>
-                <% end %>
-              <% else %>
-                <p class='orange-14 mt-3'>Vous ne pouvez supprimer une catégorie seulement si elle est vide.</p>
+            <%= render partial: 'shared/category_form', locals: {category: category,
+                                                                 cook: @cook,
+                                                                 url: cook_dashboard_category_path(category),
+                                                                 method: 'PATCH',
+                                                                 button: 'Enregistrer les modifications'} %>
+            <% if category.meals.where(deleted: [nil, false]).empty? %>
+              <%= link_to cook_dashboard_category_path(category), method: 'DELETE' do %>
+                <p class='orange-14 pointer underline mt-3'>Supprimer la catégorie</p>
               <% end %>
+            <% else %>
+              <p class='orange-14 mt-3'>Vous ne pouvez supprimer une catégorie seulement si elle est vide.</p>
             <% end %>
+
           </div>
         </div>
       </div>
@@ -67,7 +61,7 @@
 
         <div class='meal-dashboard-card'>
           <div class='meal-dashboard-card-header flex-row-sb-center <%= 'no-border-top' if meal.id == category.meals.first.id %>'>
-            <h3 class=''><%= meal.name %></h3>
+            <h3 class=''><%= meal.rank %>. <%= meal.name %></h3>
             <div class='display-card-body pointer'><i class="fas fa-chevron-down"></i></div>
             <div class='hide-card-body pointer hidden'><i class="fas fa-chevron-up"></i></div>
           </div>

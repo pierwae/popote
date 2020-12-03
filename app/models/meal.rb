@@ -1,5 +1,6 @@
 class Meal < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, optional: true
+  belongs_to :cook
   has_many   :basket_suborders
   has_many   :suborders
   has_many   :ingredients

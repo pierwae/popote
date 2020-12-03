@@ -5,6 +5,11 @@ class CookDashboard::CategoriesController < ApplicationController
     @categories = @cook.categories.order(:rank)
   end
 
+  def new
+    @category = Category.new
+    @cook = current_user.cook
+  end
+
   def meal_ranks_array
     meal_ranks = []
     (1..meals.count).each do |rank|
@@ -16,49 +21,47 @@ class CookDashboard::CategoriesController < ApplicationController
   def update
     category = Category.find(params[:id])
     save_category_based_on_params(category)
-    # cook.update_category_ranks
-    redirect_to cook_dashboard_categories_path
   end
 
   def create
     category = Category.new
-    cook = current_user.cook
-    category.rank = cook.categories.count
+    category.rank = current_user.cook.categories.count + 1
     save_category_based_on_params(category)
-    redirect_to cook_dashboard_categories_path
   end
 
   def destroy
     category = Category.find(params[:id])
+    cook = current_user.cook
+    update_category_ranks(cook, # cook
+                          category, # selected_category
+                          cook.categories.count, # new_rank
+                          category.rank) # old_rank
     category.destroy
     redirect_to cook_dashboard_categories_path
   end
 
-  def new
-    @category = Category.new
-    @cook = current_user.cook
-  end
-
   private
-
-  def params_content
-    params.require(:category).permit(:name, :rank)
-  end
 
   def save_category_based_on_params(category)
     cook = current_user.cook
-    categories = cook.categories
-    category_details = params.require(:category).permit(:name, :rank)
+    required_params = params.require(:category).permit(:name, :rank)
+    category.update(name: required_params[:name], cook: cook)
+    update_category_ranks(cook, # cook
+                          category, # selected_category
+                          required_params[:rank].to_i, # new_rank
+                          category.rank) # old_rank
+    redirect_to cook_dashboard_categories_path
+  end
 
-    category2 = categories.find_by(rank: category_details[:rank])
-    unless category2.nil?
-      category2.rank = category.rank
-      category2.save
+  def update_category_ranks(cook, selected_category, new_rank, old_rank)
+    if new_rank > old_rank
+      moving_categories = cook.categories.where(rank: (old_rank + 1..new_rank).to_a) # old_rank < rank <= new_rank
+      moving_categories.each { |category| category.decrement!(:rank) }
+    elsif new_rank < old_rank
+      moving_categories = cook.categories.where(rank: (new_rank...old_rank).to_a) # new_rank <= rank < old_rank
+      moving_categories.each { |category| category.increment!(:rank) }
     end
-
-    category.name = category_details[:name]
-    category.rank = category_details[:rank]
-    category.cook = cook
-    category.save
+    selected_category.update(rank: new_rank)
+    cook.check_category_ranks # check qu'il n'y ai pas deux categories avec un meme rang
   end
 end

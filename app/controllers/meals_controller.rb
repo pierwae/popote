@@ -33,9 +33,12 @@ class MealsController < ApplicationController
 
   def destroy
     meal = Meal.find(params[:id])
-    # meal.destroy
-    meal.deleted = true
-    meal.save
+    if meal.suborders.empty? && meal.basket_suborders.empty?
+      meal.destroy
+    else
+      meal.deleted = true
+      meal.save
+    end
     redirect_to cook_dashboard_categories_path
   end
 

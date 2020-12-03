@@ -44,6 +44,12 @@
       input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
   <%= f.input :price, label: 'Prix par portion en €', placeholder: 'ex: 10,00€',
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.input :rank, collection: meal.category.meal_ranks_array(params[:action]),
+                     label: 'Rang',
+                     selected: meal.rank.nil? ? meal.category.meal_ranks_array(params[:action]).last : meal.category.meal_ranks_array(params[:action])[meal.rank-1],
+                     include_blank: false,
+                     input_html: { class: 'details-form-item static-form-item flex-row-start-center',
+                     value: meal.rank } %>
   <%= f.association :category, collection: categories, label: 'Collection', placeholder: 'Téléphone', include_blank: false,
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
   <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: button, data: { disable_with: false } %>

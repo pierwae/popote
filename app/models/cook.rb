@@ -2,6 +2,7 @@ class Cook < ApplicationRecord
   belongs_to :user
   has_many   :categories
   has_many   :orders
+  has_many   :meals
 
   def category_ranks_array(action)
     category_ranks = []
@@ -12,12 +13,11 @@ class Cook < ApplicationRecord
     category_ranks
   end
 
-  # def update_category_ranks
-  #   i = 0
-  #   categories.order(:rank).each do |category|
-  #     i += 1
-  #     category.rank = i
-  #     category.save
-  #   end
-  # end
+  def check_category_ranks
+    i = 1
+    categories.order(:rank).each do |category|
+      category.update(rank: i) if category.rank != i
+      i += 1
+    end
+  end
 end
