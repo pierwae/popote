@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_203217) do
+ActiveRecord::Schema.define(version: 2020_12_03_124514) do
 
   create_table "basket_suborders", force: :cascade do |t|
     t.integer "meal_id", null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_203217) do
   end
 
   create_table "cooks", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_203217) do
   end
 
   create_table "meals", force: :cascade do |t|
-    t.integer "category_id", null: false
+    t.integer "category_id"
     t.float "price"
     t.string "name"
     t.boolean "deleted"
@@ -63,7 +63,9 @@ ActiveRecord::Schema.define(version: 2020_12_02_203217) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "information"
     t.integer "rank"
+    t.integer "cook_id"
     t.index ["category_id"], name: "index_meals_on_category_id"
+    t.index ["cook_id"], name: "index_meals_on_cook_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -83,8 +85,8 @@ ActiveRecord::Schema.define(version: 2020_12_02_203217) do
   end
 
   create_table "suborders", force: :cascade do |t|
-    t.integer "meal_id"
-    t.integer "order_id"
+    t.integer "meal_id", null: false
+    t.integer "order_id", null: false
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -119,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_203217) do
   add_foreign_key "cooks", "users"
   add_foreign_key "ingredients", "meals"
   add_foreign_key "meals", "categories"
+  add_foreign_key "meals", "cooks"
   add_foreign_key "orders", "cooks"
   add_foreign_key "orders", "users", column: "customer_id"
   add_foreign_key "suborders", "meals"

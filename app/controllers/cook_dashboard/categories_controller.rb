@@ -1,37 +1,10 @@
 class CookDashboard::CategoriesController < ApplicationController
+  include UpdateRanksConcern
+
   def index
     @user = current_user
     @cook = @user.cook
     @categories = @cook.categories.order(:rank)
-  end
-
-  def meal_ranks_array
-    meal_ranks = []
-    (1..meals.count).each do |rank|
-      meal_ranks << rank.to_s + '.'
-    end
-    meal_ranks
-  end
-
-  def update
-    category = Category.find(params[:id])
-    save_category_based_on_params(category)
-    # cook.update_category_ranks
-    redirect_to cook_dashboard_categories_path
-  end
-
-  def create
-    category = Category.new
-    cook = current_user.cook
-    category.rank = cook.categories.count
-    save_category_based_on_params(category)
-    redirect_to cook_dashboard_categories_path
-  end
-
-  def destroy
-    category = Category.find(params[:id])
-    category.destroy
-    redirect_to cook_dashboard_categories_path
   end
 
   def new
@@ -39,26 +12,36 @@ class CookDashboard::CategoriesController < ApplicationController
     @cook = current_user.cook
   end
 
-  private
-
-  def params_content
-    params.require(:category).permit(:name, :rank)
+  def create
+    category = Category.new
+    category.rank = current_user.cook.categories.count + 1
+    save_category_based_on_params(category)
   end
+
+  def update
+    category = Category.find(params[:id])
+    save_category_based_on_params(category)
+  end
+
+  def destroy
+    category = Category.find(params[:id])
+    cook = current_user.cook
+    update_ranks(category, # selected_element
+                 cook.categories.count, # new_rank
+                 category.rank) # old_rank
+    category.destroy
+    redirect_to cook_dashboard_categories_path
+  end
+
+  private
 
   def save_category_based_on_params(category)
     cook = current_user.cook
-    categories = cook.categories
-    category_details = params.require(:category).permit(:name, :rank)
-
-    category2 = categories.find_by(rank: category_details[:rank])
-    unless category2.nil?
-      category2.rank = category.rank
-      category2.save
-    end
-
-    category.name = category_details[:name]
-    category.rank = category_details[:rank]
-    category.cook = cook
-    category.save
+    required_params = params.require(:category).permit(:name, :rank)
+    category.update(name: required_params[:name], cook: cook)
+    update_ranks(category, # selected_element
+                 required_params[:rank].to_i, # new_rank
+                 category.rank) # old_rank
+    redirect_to cook_dashboard_categories_path
   end
 end

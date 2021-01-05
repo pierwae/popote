@@ -1,18 +1,20 @@
 class Meal < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, optional: true
+  belongs_to :cook
   has_many   :basket_suborders
   has_many   :suborders
   has_many   :ingredients
 
+  include ChildrenRanksConcern
+
   def formatted_price
-    ('%.2f' % price).gsub('.', ',')
+    puts id
+    formatted(price)
   end
 
-  def ingredient_ranks_array
-    ingredient_ranks = []
-    (1..ingredients.count).each do |rank|
-      ingredient_ranks << rank.to_s + '.'
-    end
-    ingredient_ranks
+  private
+
+  def formatted(price)
+    ('%.2f' % price).gsub('.', ',')
   end
 end

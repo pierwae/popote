@@ -3,6 +3,9 @@ puts '#1 Cleaning DB...'
 BasketSuborder.delete_all
 Basket.delete_all
 
+Suborder.delete_all
+Order.delete_all
+
 Meal.delete_all
 Category.delete_all
 Cook.delete_all
@@ -39,21 +42,23 @@ puts '#3 Creating some fake cooks...'
 Cook.create(user: pierre)
 Cook.create(user: olivia)
 
-puts '#4 Creating some fake categories...'
+puts '#4 Creating some fake categories and meals...'
+
+def create_some_meals(category, cook)
+  Meal.create(name: 'Hamburger', price: 5.00, category: category, cook: cook, rank: 1)
+  Meal.create(name: 'Tarte tatin', price: 10.00, category: category, cook: cook, rank: 2)
+  Meal.create(name: 'Raclette', price: 15.00, category: category, cook: cook, rank: 3)
+end
 
 Cook.all.each do |cook|
-  Category.create(name: 'Plats asiatiques', cook: cook)
-  Category.create(name: 'Plats algériens', cook: cook)
-  Category.create(name: "L'Amérique dans l'assiette", cook: cook)
+  cat1 = Category.create(name: 'Plats asiatiques', cook: cook, rank: 1)
+  cat2 = Category.create(name: 'Plats algériens', cook: cook, rank: 2)
+  cat3 = Category.create(name: "L'Amérique dans l'assiette", cook: cook, rank: 3)
+
+  create_some_meals(cat1, cook)
+  create_some_meals(cat2, cook)
+  create_some_meals(cat3, cook)
 end
 
-puts '#5 Creating some fake meals...'
-
-Category.all.each do |category|
-  Meal.create(name: 'Hamburger', price: 5.00, category: category)
-  Meal.create(name: 'Tarte tatin', price: 10.00, category: category)
-  Meal.create(name: 'Raclette', price: 15.00, category: category)
-end
 
 puts 'Finished !'
-
