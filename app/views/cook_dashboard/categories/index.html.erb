@@ -39,7 +39,7 @@
         <div class='dashboard-card-body hidden basket-form <%= 'border-bottom' unless category.meals.empty? %>'>
           <div class=''>
             <%= render partial: 'shared/category_form', locals: {category: category,
-                                                                 cook: @cook,
+                                                                 category_ranks: @cook.children_ranks_array(params[:action]),
                                                                  url: cook_dashboard_category_path(category),
                                                                  method: 'PATCH',
                                                                  button: 'Enregistrer les modifications'} %>
@@ -57,7 +57,7 @@
 
       <!-- MEAL CARD -->
 
-      <% category.meals.where(deleted: [nil, false]).each do |meal| %>
+      <% category.meals.order(:rank).where(deleted: [nil, false]).each do |meal| %>
 
         <div class='meal-dashboard-card'>
           <div class='meal-dashboard-card-header flex-row-sb-center <%= 'no-border-top' if meal.id == category.meals.first.id %>'>
@@ -69,6 +69,8 @@
           <div class='pt-0 dashboard-card-body basket-form hidden'>
             <!-- MEAL FORM -->
             <%= render partial: 'shared/meal_form', locals: {meal: meal,
+                                                             ingredient_ranks: meal.children_ranks_array,
+                                                             meal_ranks: category.children_ranks_array(params[:action]),
                                                              categories: @categories,
                                                              url: meal_path(meal),
                                                              method: 'PATCH',

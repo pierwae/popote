@@ -1,4 +1,6 @@
 class MealsController < ApplicationController
+  include UpdateRanksConcern
+
   def details
     meal = Meal.find(params[:meal_id])
     render json: meal.to_json
@@ -14,12 +16,6 @@ class MealsController < ApplicationController
     end
   end
 
-  def update
-    meal = Meal.find(params[:id])
-    save_meal_based_on_params(meal)
-    redirect_back(fallback_location: homepage_path)
-  end
-
   def new
     @meal = Meal.new
     @categories = current_user.cook.categories.order(created_at: :desc)
@@ -31,8 +27,17 @@ class MealsController < ApplicationController
     redirect_to cook_dashboard_categories_path
   end
 
+  def update
+    meal = Meal.find(params[:id])
+    save_meal_based_on_params(meal)
+    redirect_back(fallback_location: homepage_path)
+  end
+
   def destroy
     meal = Meal.find(params[:id])
+    update_ranks(meal, # selected_element
+                 meal.category.meals.count, # new_rank
+                 meal.rank) # old_rank
     if meal.suborders.empty? && meal.basket_suborders.empty?
       meal.destroy
     else
@@ -45,14 +50,25 @@ class MealsController < ApplicationController
   private
 
   def save_meal_based_on_params(meal)
-    meal_details = params.require(:meal).permit(:name, :information, :description, :price, :category_id)
-    meal.name        = meal_details[:name]
-    meal.information = meal_details[:information]
-    meal.description = meal_details[:description]
-    meal.price       = meal_details[:price].gsub(',', '.').to_f
-    meal.category_id = meal_details[:category_id]
+    required_params = params.require(:meal).permit(:name, :information, :description, :price, :category_id, :rank)
+    meal.name        = required_params[:name]
+    meal.information = required_params[:information]
+    meal.description = required_params[:description]
+    meal.price       = required_params[:price].gsub(',', '.').to_f
+    meal.category_id = required_params[:category_id]
+    meal.cook        = current_user.cook
+
+    unless required_params[:rank].nil?
+      meal.rank = required_params[:rank]
+    else
+      meal.rank = Category.find(required_params[:category_id]).meals.count + 1
+    end
 
     meal.save
+
+    update_ranks(meal, # selected_element
+                 required_params[:rank].to_i, # new_rank
+                 meal.rank) # old_rank
 
     meal.ingredients.each { |ingredient| ingredient.destroy }
 

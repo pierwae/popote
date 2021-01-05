@@ -7,6 +7,12 @@ class BasketSuborder < ApplicationRecord
   end
 
   def formatted_total_price
-    ('%.2f' % total_price).gsub('.', ',')
+    formatted(total_price)
+  end
+
+  private
+
+  def formatted(price)
+    ('%.2f' % price).gsub('.', ',')
   end
 end

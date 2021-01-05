@@ -12,6 +12,8 @@
 
     <div class='dashboard-card-body basket-form'>
       <%= render partial: 'shared/meal_form', locals: {meal: @meal,
+                                                       ingredient_ranks: @meal.children_ranks_array,
+                                                       meal_ranks: ['1.', '2.', '3.'],
                                                        categories: @categories,
                                                        url: meals_path,
                                                        method: 'POST',

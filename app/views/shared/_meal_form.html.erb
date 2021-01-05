@@ -9,8 +9,6 @@
   <div class='ingredients-area'>
     <%= f.simple_fields_for :ingredients do |h| %>
       <div class='wrapper-ingredients'>
-        <% ingredient_ranks = meal.ingredient_ranks_array %>
-
         <% meal.ingredients.each do |ingredient| %>
           <%= h.simple_fields_for ingredient.rank.to_s.to_sym do |k|  %>
             <div class='wrapper-item-ingredient row'>
@@ -30,11 +28,8 @@
         <% end %>
       </div>
     <% end %>
-
     <p class='add-ingredient-item orange-14 pointer underline mb-3'>Ajouter un ingrédient</p>
-
   </div>
-
 
   <!-- FIN DE LA PARTIE INGRÉDIENTS -->
 
@@ -44,12 +39,14 @@
       input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
   <%= f.input :price, label: 'Prix par portion en €', placeholder: 'ex: 10,00€',
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-  <%= f.input :rank, collection: meal.category.meal_ranks_array(params[:action]),
-                     label: 'Rang',
-                     selected: meal.rank.nil? ? meal.category.meal_ranks_array(params[:action]).last : meal.category.meal_ranks_array(params[:action])[meal.rank-1],
-                     include_blank: false,
-                     input_html: { class: 'details-form-item static-form-item flex-row-start-center',
-                     value: meal.rank } %>
+  <% unless url == meals_path && method == 'POST' %>
+    <%= f.input :rank, collection: meal_ranks,
+                       label: 'Rang',
+                       selected: meal.rank.nil? ? meal_ranks.last : meal_ranks[meal.rank-1],
+                       include_blank: false,
+                       input_html: { class: 'details-form-item static-form-item flex-row-start-center',
+                       value: meal.rank } %>
+  <% end %>
   <%= f.association :category, collection: categories, label: 'Collection', placeholder: 'Téléphone', include_blank: false,
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
   <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl', value: button, data: { disable_with: false } %>

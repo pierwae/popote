@@ -12,7 +12,7 @@
     <div class='dashboard-card-body basket-form'>
       <div class=''>
         <%= render partial: 'shared/category_form', locals: {category: @category,
-                                                             cook: @cook,
+                                                             category_ranks: @cook.children_ranks_array(params[:action]),
                                                              url: cook_dashboard_categories_path,
                                                              method: 'POST',
                                                              button: 'Ajouter la catégorie'} %>

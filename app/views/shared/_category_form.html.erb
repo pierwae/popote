@@ -2,9 +2,9 @@
   <%= f.error_notification %>
   <%= f.input :name, label: 'Nom de la catégorie', placeholder: 'ex : ...',
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
-  <%= f.input :rank, collection: cook.category_ranks_array(params[:action]),
+  <%= f.input :rank, collection: category_ranks,
                      label: 'Rang',
-                     selected: category.rank.nil? ? cook.category_ranks_array(params[:action]).last : cook.category_ranks_array(params[:action])[category.rank-1],
+                     selected: category.rank.nil? ? category_ranks.last : category_ranks[category.rank-1],
                      include_blank: false,
                      input_html: { class: 'details-form-item static-form-item flex-row-start-center',
                      value: category.rank } %>
