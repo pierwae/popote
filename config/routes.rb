@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :cooks, only: :index
 
   namespace :cook_dashboard do
-    resources :cooks, only: :show
+    resources :cooks, only: %i[show update]
     resources :orders, only: %i[index update] do
       patch 'accept'
       patch 'decline'
