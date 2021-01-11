@@ -38,7 +38,9 @@
           <%= link_to cook_dashboard_categories_path do %>
             <div class='nav-menu-item grey-medium-16'>Mes recettes</div>
           <% end %>
-          <div class='nav-menu-item grey-medium-16'>Mon profil</div>
+          <%= link_to cook_dashboard_cook_path(current_user.cook) do %>
+            <div class='nav-menu-item grey-medium-16'>Mon profil</div>
+          <% end %>
         </div>
 
         <div class='nav-menu-item grey-medium-16'>FAQ</div>

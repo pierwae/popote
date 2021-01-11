@@ -1,0 +1,80 @@
+<div class='yellow-banner'>
+  <div class='dashboard-container banner-title'>
+    <h2>Mon profil cuisinier</h2>
+  </div>
+</div>
+
+<div class='dashboard-container page-lifted'>
+
+  <!-- DÉTAILS PART -->
+
+  <div class='dashboard-card mt-0'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Détails</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <%= simple_form_for @cook, url: cook_dashboard_cook_path(@cook), method: 'PUT' do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :first_name, label: false, placeholder: 'Prénom',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.input :last_name, label: false, placeholder: 'Nom',
+            input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.input :description, as: :text, label: 'Description', placeholder: 'ex : ...',
+            input_html: { rows: 5, class: 'details-form-item static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, id: 'update-details-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- ADRESSE PART -->
+
+  <div class='dashboard-card'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Photo</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <%= simple_form_for @cook, url: '#' do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :description, label: false, placeholder: 'Photo de profil',
+            input_html: { class: 'address-form-item static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, id: 'update-address-btn', class: 'red-btn-xl inactive-btn', value: 'Enregistrer les modifications', data: { disable_with: false } %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- DELETE ACCOUNT PART -->
+
+  <div class='dashboard-card'>
+    <div class='dashboard-card-header flex-row-start-center'>
+      <h3 class='dashboard-card-title'>Supprimer définitivement mon compte cuisinier</h3>
+    </div>
+    <div class='dashboard-card-body'>
+
+      <p class='mb-3' >
+        Pour supprimer définitivement votre compte, vous devez saisir votre mot de passe.
+        Une fois la suppression effectuée, il ne sera plus possible de réactiver votre compte.
+      </p>
+      <p class='mb-3' >
+        Si vous avez oublié votre mot de passe, vous pouvez créer un nouveau mot de passe (rubrique "Mon compte").
+      </p>
+
+      <%= simple_form_for @user, url: '#' do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :password, label: false, placeholder: 'Mot de passe',
+            input_html: { class: 'static-form-item flex-row-start-center' } %>
+        <%= f.button :submit, class: 'red-btn-xl', value: 'Continuer', data: { disable_with: false } %>
+      <% end %>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+  <%= javascript_pack_tag 'userShow'%>
