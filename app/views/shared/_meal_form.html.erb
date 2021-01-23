@@ -2,6 +2,10 @@
   <%= f.error_notification %>
   <%= f.input :name, label: 'Nom de la recette', placeholder: 'ex : Hamburger',
       input_html: { class: 'details-form-item static-form-item flex-row-start-center' } %>
+  <%= f.input :photo, as: :file %>
+  <% if meal.photo.attached? %>
+    <%= cl_image_tag meal.photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
 
   <!-- DÉBUT DE LA PARTIE INGRÉDIENTS -->
 

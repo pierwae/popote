@@ -1,4 +1,6 @@
 class Meal < ApplicationRecord
+  has_one_attached :photo
+
   belongs_to :category, optional: true
   belongs_to :cook
   has_many   :basket_suborders
