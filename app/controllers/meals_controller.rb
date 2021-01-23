@@ -50,7 +50,8 @@ class MealsController < ApplicationController
   private
 
   def save_meal_based_on_params(meal)
-    required_params = params.require(:meal).permit(:name, :information, :description, :price, :category_id, :rank)
+    meal.update(params.require(:meal).permit(:photo))
+    required_params = params.require(:meal).permit(:name, :information, :description, :price, :category_id, :rank, :photo)
     meal.name        = required_params[:name]
     meal.information = required_params[:information]
     meal.description = required_params[:description]
